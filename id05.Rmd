@@ -97,15 +97,3 @@ names(CANCRO)
 
 total <- merge(POP, CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
 names(total)
-
-
-
-CANCRO2<-na.omit(CANCRO)
-View(CANCRO2)
-```
-
-```{r}
-total <- merge(POP,CANCRO,by= c("Country", "ageGroup"))
-View(total)
-```
-
