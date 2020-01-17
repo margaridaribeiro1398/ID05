@@ -8,10 +8,75 @@ output: html_document
 ```{r read data}
 dadoscancro<- read.csv(file = "data/CancerMortalityEU.csv")
 names(dadoscancro)
+View(dadoscancro)
 
 dadospopulacao <- read.csv( file = "data/PopulationEU.csv")
 names(dadospopulacao)
+str(dadospopulacao)
 
 ```
 
-Tebtar
+```{r tidyverse}
+# install.packages("data.table")
+# library(data.table)
+# library(rmarkdown)
+# library(ggplot2)
+# library(tidyverse)
+# library(tidyr)
+# library(dplyr)
+# library(here))
+# library(magrittr)
+# library(ggrepel)
+# library(knitr)
+# library(kableExtra)
+
+tail(dadoscancro, n=10)
+head(dadospopulacao, n=10)
+
+#Temos NAS
+
+novopop<-dadospopulacao[,-c(3,5)]
+names(novopop)
+
+
+
+
+
+POP <- melt(novopop,
+           id.vars = c("Country", "Sex", "ageGroup"),
+           measure = patterns("^[X]"),
+           variable.name = "YearC",
+           value.name = c("numeropop"),
+           na.rm = TRUE)
+str(POP)
+View(POP)
+
+
+# Create a Numberic Year column
+POP[, Year := as.numeric(gsub("^[X]", "", YearC))][, YearC:=NULL]
+# Order data by country and year
+setcolorder(POP, c("Country", "Sex", "ageGroup", "Year", "numeropop"))
+str(POP)
+
+
+
+```
+
+```{r cancros}
+
+#Cancros
+
+names(dadoscancro)
+
+novocancro<- dadoscancro[,-c(2,4,6)]
+names(novocancro)
+
+CANCRO <- melt(novocancro,
+           id.vars = c("Country", "CancerSite", "ageGroup"),
+           measure = patterns("^[Males]"),
+           variable.name = "YearC",
+           value.name = c("numerofem"),
+           na.rm = TRUE)
+
+```
+
