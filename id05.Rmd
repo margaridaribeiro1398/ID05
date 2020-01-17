@@ -39,25 +39,17 @@ head(dadospopulacao, n=10)
 
 novopop<-dadospopulacao[,-c(3,5)]
 names(novopop)
+View(novopop)
 
-
-POP <- melt(novopop,
-           id.vars = c("Country", "Sex", "ageGroup"),
-           measure = patterns("^[X]"),
-           variable.name = "YearC",
-           value.name = c("numeropop"),
-           na.rm = TRUE)
-str(POP)
+POP<-gather(novopop,"Year","pop",4:22)
 View(POP)
 
-
 # Create a Numberic Year column
-POP[, Year := as.numeric(gsub("^[X]", "", YearC))][, YearC:=NULL]
-# Order data by country and year
-setcolorder(POP, c("Country", "Sex", "ageGroup", "Year", "numeropop"))
-str(POP)
+POP$Year<-as.numeric(POP$Year)
+POP$Year<-
 
 
+POP$Year<-sub(".", "", POP$Year)  #The first character is always identified as:                                   “.” (a dot in double quotation marks).
 
 ```
 
