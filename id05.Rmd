@@ -17,23 +17,25 @@ View(dadoscancro)
 ```{r dados pop}
 dadospopulacao <- read.csv( file = "data/PopulationEU.csv")
 names(dadospopulacao)
-str(dadospopulacao)
 
 ```
 
 ```{r organizar POP}
 # install.packages("data.table")
 # library(data.table)
+# install.packages("rmarkdown")
 # library(rmarkdown)
+# install.packages("ggplot2")
 # library(ggplot2)
+# install.packages("tidyverse")
 # library(tidyverse)
-# library(tidyr)
+# install.packages("dplyr")
 # library(dplyr)
-# library(here))
-# library(magrittr)
-# library(ggrepel)
-# library(knitr)
-# library(kableExtra)
+# install.packages("here")
+# library(here)
+# install.packages(c("tidyr", "devtools"))
+# library("tidyr")
+# library("devtools")
 
 tail(dadoscancro, n=10)
 head(dadospopulacao, n=10)
@@ -49,6 +51,10 @@ POP<-gather(novopop,"Year","pop",4:22)
 
 POP$Year<-sub(".", "", POP$Year)  #The first character is always identified as:                                   “.” (a dot in double quotation marks).
 View(POP)
+
+POP <- na.omit(POP)
+tail(POP)
+
 ```
 
 
@@ -59,25 +65,35 @@ View(POP)
 names(dadoscancro)
 novocancro<-dadoscancro[,-c(2,4,6)]
 names(novocancro)
-View(novocancro)
+#View(novocancro)
 
 CANCRO<-gather(novocancro,"Year","cancer",4:17)
-Sexo<- rep(c("Females", "Males"), times = c(63504,63504))
-CANCRO<-cbind(CANCRO,Sexo)
+Sex<- rep(c("Females", "Males"), times = c(63504,63504))
+CANCRO<-cbind(CANCRO,Sex)
 
 
 CANCRO$Year<-sub("Females", "", CANCRO$Year)
 CANCRO$Year<-sub("Males", "", CANCRO$Year)
 CANCRO$Year<-sub(".", "", CANCRO$Year)
 
-View(CANCRO)
+CANCRO <- na.omit(CANCRO) #NO ENVIRNMENT NAO APARECE AS OBSERVACOES CERTAS
+view(CANCRO)
+str(CANCRO)
 
-CANCRO2<-na.omit(CANCRO)
-View(CANCRO2)
 ```
 
-```{r}
-total <- merge(POP,CANCRO,by= c("Country", "ageGroup"))
-View(total)
+
+```{r names}
+
+names(POP)
+names(CANCRO)
+
 ```
 
+
+
+
+```{r primeira tarefa}
+
+total <- merge(POP, CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
+names(total)
