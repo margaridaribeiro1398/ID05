@@ -6,7 +6,12 @@ output: html_document
 ---
 
 ```{r read data}
-x<- c(9,6,7)
+dadoscancro<- read.csv(file = "data/CancerMortalityEU.csv")
+names(dadoscancro)
+
+dadospopulacao <- read.csv( file = "data/PopulationEU.csv")
+names(dadospopulacao)
 
 ```
 
+Tebtar
