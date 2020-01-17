@@ -1,6 +1,6 @@
 ---
 title: "ID05"
-author: "Margarida Ribeiro"
+author: "Grupo 05"
 date: "16/01/2020"
 output: html_document
 ---
