@@ -5,18 +5,20 @@ date: "16/01/2020"
 output: html_document
 ---
 
-```{r read data}
+```{r read dados cancro}
 dadoscancro<- read.csv(file = "data/CancerMortalityEU.csv")
 names(dadoscancro)
 View(dadoscancro)
 
+```
+```{r dados pop}
 dadospopulacao <- read.csv( file = "data/PopulationEU.csv")
 names(dadospopulacao)
 str(dadospopulacao)
 
 ```
 
-```{r tidyverse}
+```{r organizar POP}
 # install.packages("data.table")
 # library(data.table)
 # library(rmarkdown)
@@ -39,9 +41,6 @@ novopop<-dadospopulacao[,-c(3,5)]
 names(novopop)
 
 
-
-
-
 POP <- melt(novopop,
            id.vars = c("Country", "Sex", "ageGroup"),
            measure = patterns("^[X]"),
@@ -62,21 +61,46 @@ str(POP)
 
 ```
 
-```{r cancros}
+```{r organizar cancros}
 
 #Cancros
 
-names(dadoscancro)
-
-novocancro<- dadoscancro[,-c(2,4,6)]
-names(novocancro)
-
-CANCRO <- melt(novocancro,
+CANCRO_FEM <- melt(novocancro,
            id.vars = c("Country", "CancerSite", "ageGroup"),
-           measure = patterns("^[Males]"),
+           measure = patterns("^Females_"),
            variable.name = "YearC",
-           value.name = c("numerofem"),
+           value.name = c("numero"),
            na.rm = TRUE)
+
+CANCRO_MASC <- melt(novocancro,
+           id.vars = c("Country", "CancerSite", "ageGroup"),
+           measure = patterns("^Males_"),
+           variable.name = "YearC",
+           value.name = c("numero"),
+           na.rm = TRUE)
+
+str(CANCRO)
+
+# Create a Numberic Year column
+CANCRO_FEM[, Year := as.numeric(gsub(c("^Females_"), "", YearC))][, YearC:=NULL]
+# Order data by country and year
+setcolorder(CANCRO_FEM, c("Country", "CancerSite", "ageGroup", "Year", "numero"))
+
+View(CANCRO_FEM)
+
+# Create a Numberic Year column
+CANCRO_MASC[, Year := as.numeric(gsub(c("^Males_"), "", YearC))][, YearC:=NULL]
+# Order data by country and year
+setcolorder(CANCRO_MASC, c("Country", "CancerSite", "ageGroup", "Year", "numero"))
+
+View(CANCRO_MASC)
+finaldt <- rbind(CANCRO_FEM, CANCRO_MASC)
+View(finaldt)
+
+final<-finaldt[,-c(6:8)]
+View(final)
+
+Sexo<-c("Feminino","Masculino")[rep(c(54585,48235),times=1)]
 
 ```
 
