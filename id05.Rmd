@@ -72,5 +72,12 @@ CANCRO$Year<-sub(".", "", CANCRO$Year)
 
 View(CANCRO)
 
+CANCRO2<-na.omit(CANCRO)
+View(CANCRO2)
+```
+
+```{r}
+total <- merge(POP,CANCRO,by= c("Country", "ageGroup"))
+View(total)
 ```
 
