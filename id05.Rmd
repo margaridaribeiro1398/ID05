@@ -77,7 +77,7 @@ CANCRO$Year<-sub("Males", "", CANCRO$Year)
 CANCRO$Year<-sub(".", "", CANCRO$Year)
 
 CANCRO <- na.omit(CANCRO) #NO ENVIRNMENT NAO APARECE AS OBSERVACOES CERTAS
-view(CANCRO)
+View(CANCRO)
 str(CANCRO)
 
 ```
@@ -101,7 +101,7 @@ tot<- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN
 View(tot)
 setnames(tot, old = c("Group.1","Group.2","Group.3","x"), new = c("Ano", "Pais", "Sexo","Mortes"))
 names(tot)
-#Dataframe das mortes relativas a cancro por Ano, Pais e Sexo
+#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
 #Falta adicionar a coluna com o total da populacao de cada pais em cada ano respectivamente
 
 
