@@ -21,21 +21,21 @@ names(dadospopulacao)
 ```
 
 ```{r organizar POP}
-# install.packages("data.table")
-# library(data.table)
-# install.packages("rmarkdown")
-# library(rmarkdown)
-# install.packages("ggplot2")
-# library(ggplot2)
-# install.packages("tidyverse")
-# library(tidyverse)
-# install.packages("dplyr")
-# library(dplyr)
-# install.packages("here")
-# library(here)
-# install.packages(c("tidyr", "devtools"))
-# library("tidyr")
-# library("devtools")
+install.packages("data.table")
+library(data.table)
+install.packages("rmarkdown")
+library(rmarkdown)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("tidyverse")
+library(tidyverse)
+install.packages("dplyr")
+library(dplyr)
+install.packages("here")
+library(here)
+install.packages(c("tidyr", "devtools"))
+library("tidyr")
+library("devtools")
 
 tail(dadoscancro, n=10)
 head(dadospopulacao, n=10)
@@ -91,9 +91,14 @@ names(CANCRO)
 ```
 
 
+```{r}
+total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
+View(total)
+
+tot<- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex, total$pop), FUN=sum)
+View(tot)
+
+```
 
 
-```{r primeira tarefa}
 
-total <- merge(POP, CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
-names(total)
