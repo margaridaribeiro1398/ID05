@@ -91,14 +91,35 @@ names(CANCRO)
 ```
 
 
-```{r}
+```{r primeira tarefa}
+
 total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
 View(total)
+#Juncao da CANCRO e POP para termos as duas dataframes cruzadas
 
-tot<- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex, total$pop), FUN=sum)
+tot<- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN=sum)
 View(tot)
+setnames(tot, old = c("Group.1","Group.2","Group.3","x"), new = c("Ano", "Pais", "Sexo","Mortes"))
+names(tot)
+#Dataframe das mortes relativas a cancro por Ano, Pais e Sexo
+#Falta adicionar a coluna com o total da populacao de cada pais em cada ano respectivamente
 
+
+totpop<- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
+populacaototal<-totpop[totpop$Group.1=="Total",]
+View(populacaototal)
+#Apenas queriamos a densidade populacional sem descriminar os sexos
+novopoptotal<-populacaototal[,-1]
+View(novopoptotal)
+setnames(novopoptotal, old = c("Group.2","Group.3","x"), new = c("Pais","Ano", "Populacao Total" ))
+View(novopoptotal)
+
+
+final<- merge(tot,novopoptotal, by=c("Ano", "Pais"))
+View(final)
+#Dataframe das mortes relativas a cancro por Ano, Pais, Sexo e densidade populacional
 ```
+
 
 
 
