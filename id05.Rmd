@@ -5,13 +5,129 @@ date: "16/01/2020"
 output: html_document
 ---
 
-```{r read data}
+```{r read dados cancro}
 dadoscancro<- read.csv(file = "data/CancerMortalityEU.csv")
 names(dadoscancro)
+View(dadoscancro)
 
+```
+
+
+
+```{r dados pop}
 dadospopulacao <- read.csv( file = "data/PopulationEU.csv")
 names(dadospopulacao)
 
 ```
 
-Tebtar
+```{r organizar POP}
+install.packages("data.table")
+library(data.table)
+install.packages("rmarkdown")
+library(rmarkdown)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("tidyverse")
+library(tidyverse)
+install.packages("dplyr")
+library(dplyr)
+install.packages("here")
+library(here)
+install.packages(c("tidyr", "devtools"))
+library("tidyr")
+library("devtools")
+
+tail(dadoscancro, n=10)
+head(dadospopulacao, n=10)
+
+#Temos NAS
+
+novopop<-dadospopulacao[,-c(3,5)]
+names(novopop)
+View(novopop)
+
+POP<-gather(novopop,"Year","pop",4:22)
+
+
+POP$Year<-sub(".", "", POP$Year)  #The first character is always identified as:                                   “.” (a dot in double quotation marks).
+View(POP)
+
+POP <- na.omit(POP)
+tail(POP)
+
+```
+
+
+
+```{r organizar cancros}
+
+#Cancros
+names(dadoscancro)
+novocancro<-dadoscancro[,-c(2,4,6)]
+names(novocancro)
+#View(novocancro)
+
+CANCRO<-gather(novocancro,"Year","cancer",4:17)
+Sex<- rep(c("Females", "Males"), times = c(63504,63504))
+CANCRO<-cbind(CANCRO,Sex)
+
+
+CANCRO$Year<-sub("Females", "", CANCRO$Year)
+CANCRO$Year<-sub("Males", "", CANCRO$Year)
+CANCRO$Year<-sub(".", "", CANCRO$Year)
+
+CANCRO <- na.omit(CANCRO) #NO ENVIRNMENT NAO APARECE AS OBSERVACOES CERTAS
+view(CANCRO)
+str(CANCRO)
+
+```
+
+
+```{r names}
+
+names(POP)
+names(CANCRO)
+
+```
+
+
+```{r primeira tarefa}
+
+total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
+View(total)
+#Juncao da CANCRO e POP para termos as duas dataframes cruzadas
+
+tot<- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN=sum)
+View(tot)
+setnames(tot, old = c("Group.1","Group.2","Group.3","x"), new = c("Ano", "Pais", "Sexo","Mortes"))
+names(tot)
+#Dataframe das mortes relativas a cancro por Ano, Pais e Sexo
+#Falta adicionar a coluna com o total da populacao de cada pais em cada ano respectivamente
+
+
+totpop<- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
+populacaototal<-totpop[totpop$Group.1=="Total",]
+View(populacaototal)
+#Apenas queriamos a densidade populacional sem descriminar os sexos
+novopoptotal<-populacaototal[,-1]
+View(novopoptotal)
+setnames(novopoptotal, old = c("Group.2","Group.3","x"), new = c("Pais","Ano", "DensidadePop" ))
+View(novopoptotal)
+
+
+final<- merge(tot,novopoptotal, by=c("Ano", "Pais"))
+View(final)
+#Dataframe das mortes relativas a cancro por Ano, Pais, Sexo e densidade populacional
+```
+
+```{r mrate}
+
+mRate <- 100000*(final$Mortes/final$DensidadePop)
+mRate<-round(mRate,3)
+final<-cbind(final,mRate)
+View(final)
+
+```
+
+
+
