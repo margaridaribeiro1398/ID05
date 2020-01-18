@@ -111,7 +111,7 @@ View(populacaototal)
 #Apenas queriamos a densidade populacional sem descriminar os sexos
 novopoptotal<-populacaototal[,-1]
 View(novopoptotal)
-setnames(novopoptotal, old = c("Group.2","Group.3","x"), new = c("Pais","Ano", "Populacao Total" ))
+setnames(novopoptotal, old = c("Group.2","Group.3","x"), new = c("Pais","Ano", "DensidadePop" ))
 View(novopoptotal)
 
 
@@ -120,6 +120,14 @@ View(final)
 #Dataframe das mortes relativas a cancro por Ano, Pais, Sexo e densidade populacional
 ```
 
+```{r mrate}
+
+mRate <- 100000*(final$Mortes/final$DensidadePop)
+mRate<-round(mRate,3)
+final<-cbind(final,mRate)
+View(final)
+
+```
 
 
 
