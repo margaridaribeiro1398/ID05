@@ -68,6 +68,9 @@ CANCRO$Year<-sub(".", "", CANCRO$Year) #Tirar o underscore dos anos
 CANCRO <- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
 str(CANCRO)
 
+CANCRO<- CANCRO[CANCRO$CancerSite=="Bladder",]
+View(CANCRO)
+
 ```
 
 
@@ -125,6 +128,14 @@ MRATE <- final3[,-c(1:5)]
 
 TabelaFinal<- cbind(final,MRATE)
 TabelaFinal
+View(TabelaFinal)
+```
+
+```{r questão 1}
+selecionar <- TabelaFinal[Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & (Year %% 5) == 0,
+ .(Country, Year, pctWiP)]
+WPEU
+
 ```
 
 
