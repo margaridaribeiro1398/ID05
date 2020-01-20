@@ -125,7 +125,6 @@ MRATE <- final3[,-c(1:5)]
 
 TabelaFinal<- cbind(final,MRATE)
 TabelaFinal
-
 ```
 
 

@@ -412,10 +412,8 @@ names(dadospopulacao)</code></pre>
 <pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
 <pre class="r"><code>library(data.table)
 library(rmarkdown)
-library(tidyr)</code></pre>
-<pre><code>## Error: package or namespace load failed for &#39;tidyr&#39; in loadNamespace(j &lt;- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
-##  there is no package called &#39;dplyr&#39;</code></pre>
-<pre class="r"><code>library(devtools)</code></pre>
+library(tidyr)
+library(devtools)</code></pre>
 <pre><code>## Loading required package: usethis</code></pre>
 <pre><code>## Error: package or namespace load failed for &#39;usethis&#39; in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
 ##  there is no package called &#39;fs&#39;</code></pre>
@@ -423,9 +421,19 @@ library(tidyr)</code></pre>
 <pre class="r"><code>library(ggplot2)
 library(tidyverse)</code></pre>
 <pre><code>## Error: package or namespace load failed for &#39;tidyverse&#39; in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
-##  there is no package called &#39;dplyr&#39;</code></pre>
+##  there is no package called &#39;fs&#39;</code></pre>
 <pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## Error in library(dplyr): there is no package called &#39;dplyr&#39;</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:data.table&#39;:
+## 
+##     between, first, last</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>library(here)</code></pre>
 <pre><code>## here() starts at C:/Users/Margarida/Desktop/ID05/ID05</code></pre>
 <pre class="r"><code>novopop&lt;-dadospopulacao[,-c(3,5)]
@@ -434,12 +442,9 @@ names(novopop)</code></pre>
 ##  [7] &quot;X2003&quot;    &quot;X2004&quot;    &quot;X2005&quot;    &quot;X2006&quot;    &quot;X2007&quot;    &quot;X2008&quot;   
 ## [13] &quot;X2009&quot;    &quot;X2010&quot;    &quot;X2011&quot;    &quot;X2012&quot;    &quot;X2013&quot;    &quot;X2014&quot;   
 ## [19] &quot;X2015&quot;    &quot;X2016&quot;    &quot;X2017&quot;    &quot;X2018&quot;</code></pre>
-<pre class="r"><code>POP&lt;-gather(novopop,&quot;Year&quot;,&quot;pop&quot;,4:22)</code></pre>
-<pre><code>## Error in gather(novopop, &quot;Year&quot;, &quot;pop&quot;, 4:22): could not find function &quot;gather&quot;</code></pre>
-<pre class="r"><code>POP$Year&lt;-sub(&quot;.&quot;, &quot;&quot;, POP$Year)  #Tirar o primeiro caracter (X) dos anos</code></pre>
-<pre><code>## Error in sub(&quot;.&quot;, &quot;&quot;, POP$Year): object &#39;POP&#39; not found</code></pre>
-<pre class="r"><code>POP &lt;- na.omit(POP)</code></pre>
-<pre><code>## Error in na.omit(POP): object &#39;POP&#39; not found</code></pre>
+<pre class="r"><code>POP&lt;-gather(novopop,&quot;Year&quot;,&quot;pop&quot;,4:22)
+POP$Year&lt;-sub(&quot;.&quot;, &quot;&quot;, POP$Year)  #Tirar o primeiro caracter (X) dos anos
+POP &lt;- na.omit(POP)</code></pre>
 <pre class="r"><code>#Cancros
 names(dadoscancro)</code></pre>
 <pre><code>##  [1] &quot;Country&quot;      &quot;Cause&quot;        &quot;CancerSite&quot;   &quot;ageStart&quot;    
@@ -454,81 +459,448 @@ names(novocancro)</code></pre>
 ##  [9] &quot;Females_2016&quot; &quot;Females_2017&quot; &quot;Males_2011&quot;   &quot;Males_2012&quot;  
 ## [13] &quot;Males_2013&quot;   &quot;Males_2014&quot;   &quot;Males_2015&quot;   &quot;Males_2016&quot;  
 ## [17] &quot;Males_2017&quot;</code></pre>
-<pre class="r"><code>CANCRO&lt;-gather(novocancro,&quot;Year&quot;,&quot;cancer&quot;,4:17)</code></pre>
-<pre><code>## Error in gather(novocancro, &quot;Year&quot;, &quot;cancer&quot;, 4:17): could not find function &quot;gather&quot;</code></pre>
-<pre class="r"><code>Sex&lt;- rep(c(&quot;Females&quot;, &quot;Males&quot;), times = c(63504,63504))
-CANCRO&lt;-cbind(CANCRO,Sex)</code></pre>
-<pre><code>## Error in cbind(CANCRO, Sex): object &#39;CANCRO&#39; not found</code></pre>
-<pre class="r"><code>CANCRO$Year&lt;-sub(&quot;Females&quot;, &quot;&quot;, CANCRO$Year) #Tirar a palavra Females dos anos</code></pre>
-<pre><code>## Error in sub(&quot;Females&quot;, &quot;&quot;, CANCRO$Year): object &#39;CANCRO&#39; not found</code></pre>
-<pre class="r"><code>CANCRO$Year&lt;-sub(&quot;Males&quot;, &quot;&quot;, CANCRO$Year) #Tirar a palavra Males dos anos</code></pre>
-<pre><code>## Error in sub(&quot;Males&quot;, &quot;&quot;, CANCRO$Year): object &#39;CANCRO&#39; not found</code></pre>
-<pre class="r"><code>CANCRO$Year&lt;-sub(&quot;.&quot;, &quot;&quot;, CANCRO$Year) #Tirar o underscore dos anos</code></pre>
-<pre><code>## Error in sub(&quot;.&quot;, &quot;&quot;, CANCRO$Year): object &#39;CANCRO&#39; not found</code></pre>
-<pre class="r"><code>CANCRO &lt;- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS</code></pre>
-<pre><code>## Error in na.omit(CANCRO): object &#39;CANCRO&#39; not found</code></pre>
-<pre class="r"><code>str(CANCRO)</code></pre>
-<pre><code>## Error in str(CANCRO): object &#39;CANCRO&#39; not found</code></pre>
-<pre class="r"><code>total&lt;-merge(POP,CANCRO, by=c(&quot;Country&quot;, &quot;Sex&quot;, &quot;Year&quot;, &quot;ageGroup&quot;))</code></pre>
-<pre><code>## Error in merge(POP, CANCRO, by = c(&quot;Country&quot;, &quot;Sex&quot;, &quot;Year&quot;, &quot;ageGroup&quot;)): object &#39;POP&#39; not found</code></pre>
-<pre class="r"><code>#Junção do CANCRO e POP para termos as duas dataframes cruzadas
+<pre class="r"><code>CANCRO&lt;-gather(novocancro,&quot;Year&quot;,&quot;cancer&quot;,4:17)
+Sex&lt;- rep(c(&quot;Females&quot;, &quot;Males&quot;), times = c(63504,63504))
+CANCRO&lt;-cbind(CANCRO,Sex)
 
-tot&lt;- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN=sum)</code></pre>
-<pre><code>## Error in aggregate(total$cancer, by = list(total$Year, total$Country, : object &#39;total&#39; not found</code></pre>
-<pre class="r"><code>#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
-setnames(tot, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Ano&quot;, &quot;Pais&quot;, &quot;Sexo&quot;,&quot;Mortes&quot;))</code></pre>
-<pre><code>## Error in is.data.frame(x): object &#39;tot&#39; not found</code></pre>
-<pre class="r"><code>names(tot)</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;tot&#39; not found</code></pre>
+CANCRO$Year&lt;-sub(&quot;Females&quot;, &quot;&quot;, CANCRO$Year) #Tirar a palavra Females dos anos
+CANCRO$Year&lt;-sub(&quot;Males&quot;, &quot;&quot;, CANCRO$Year) #Tirar a palavra Males dos anos
+CANCRO$Year&lt;-sub(&quot;.&quot;, &quot;&quot;, CANCRO$Year) #Tirar o underscore dos anos
+
+CANCRO &lt;- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
+str(CANCRO)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    102820 obs. of  6 variables:
+##  $ Country   : Factor w/ 28 levels &quot;Austria&quot;,&quot;Belgium&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ CancerSite: Factor w/ 18 levels &quot;All Cancers&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ ageGroup  : Factor w/ 18 levels &quot;1-4&quot;,&quot;10-14&quot;,..: 1 10 2 3 4 5 6 7 8 9 ...
+##  $ Year      : chr  &quot;2011&quot; &quot;2011&quot; &quot;2011&quot; &quot;2011&quot; ...
+##  $ cancer    : int  0 0 0 0 0 0 0 1 1 2 ...
+##  $ Sex       : Factor w/ 2 levels &quot;Females&quot;,&quot;Males&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  - attr(*, &quot;na.action&quot;)= &#39;omit&#39; Named int  235 236 237 238 239 240 241 242 243 244 ...
+##   ..- attr(*, &quot;names&quot;)= chr  &quot;235&quot; &quot;236&quot; &quot;237&quot; &quot;238&quot; ...</code></pre>
+<pre class="r"><code>total&lt;-merge(POP,CANCRO, by=c(&quot;Country&quot;, &quot;Sex&quot;, &quot;Year&quot;, &quot;ageGroup&quot;))
+#Junção do CANCRO e POP para termos as duas dataframes cruzadas
+
+tot&lt;- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN=sum)
+#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
+setnames(tot, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Ano&quot;, &quot;Pais&quot;, &quot;Sexo&quot;,&quot;Mortes&quot;))
+names(tot)</code></pre>
+<pre><code>## [1] &quot;Ano&quot;    &quot;Pais&quot;   &quot;Sexo&quot;   &quot;Mortes&quot;</code></pre>
 <pre class="r"><code>#Falta adicionar a coluna com o total da populacao de cada pais em cada ano respectivamente
 
 
-totpop&lt;- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)</code></pre>
-<pre><code>## Error in aggregate(POP$pop, by = list(POP$Sex, POP$Country, POP$Year), : object &#39;POP&#39; not found</code></pre>
-<pre class="r"><code>#Dataframe do nr de população relativa por Ano, País e Sexo
+totpop&lt;- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
+#Dataframe do nr de população relativa por Ano, País e Sexo
 
 
-populacaototal_FEM&lt;-totpop[totpop$Group.1==&quot;Females&quot;,] #desnidade populacional do sexo feminino</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;totpop&#39; not found</code></pre>
-<pre class="r"><code>populacaototal_MASC&lt;-totpop[totpop$Group.1==&quot;Males&quot;,] #densidade populacional do sexo masculino</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;totpop&#39; not found</code></pre>
-<pre class="r"><code>setnames(populacaototal_FEM, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Sexo&quot;,&quot;Pais&quot;,&quot;Ano&quot;, &quot;DensidadePop&quot; ))</code></pre>
-<pre><code>## Error in is.data.frame(x): object &#39;populacaototal_FEM&#39; not found</code></pre>
-<pre class="r"><code>populacaototal&lt;- merge(populacaototal_FEM,populacaototal_MASC, by=c(&quot;Ano&quot;, &quot;Pais&quot;)) #dataframe com a população por sexo</code></pre>
-<pre><code>## Error in merge(populacaototal_FEM, populacaototal_MASC, by = c(&quot;Ano&quot;, : object &#39;populacaototal_FEM&#39; not found</code></pre>
-<pre class="r"><code>View(populacaototal)</code></pre>
-<pre><code>## Error in as.data.frame(x): object &#39;populacaototal&#39; not found</code></pre>
-<pre class="r"><code>populacaototal_sexos&lt;-rbind(populacaototal_FEM,populacaototal_MASC) </code></pre>
-<pre><code>## Error in rbind(populacaototal_FEM, populacaototal_MASC): object &#39;populacaototal_FEM&#39; not found</code></pre>
-<pre class="r"><code>#Junção dos sexos e da densidade populacional numa só coluna, cada variável
+populacaototal_FEM&lt;-totpop[totpop$Group.1==&quot;Females&quot;,] #desnidade populacional do sexo feminino
+
+populacaototal_MASC&lt;-totpop[totpop$Group.1==&quot;Males&quot;,] #densidade populacional do sexo masculino
+
+setnames(populacaototal_FEM, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Sexo&quot;,&quot;Pais&quot;,&quot;Ano&quot;, &quot;DensidadePop&quot; ))
+
+populacaototal&lt;- merge(populacaototal_FEM,populacaototal_MASC, by=c(&quot;Ano&quot;, &quot;Pais&quot;)) #dataframe com a população por sexo
+View(populacaototal)
+
+populacaototal_sexos&lt;-rbind(populacaototal_FEM,populacaototal_MASC) 
+#Junção dos sexos e da densidade populacional numa só coluna, cada variável
 
 final&lt;- merge(tot,populacaototal_sexos, by=c(&quot;Ano&quot;, &quot;Pais&quot;,&quot;Sexo&quot;)) #Dataframe com a população total e o nr de mortes</code></pre>
-<pre><code>## Error in merge(tot, populacaototal_sexos, by = c(&quot;Ano&quot;, &quot;Pais&quot;, &quot;Sexo&quot;)): object &#39;tot&#39; not found</code></pre>
 <pre class="r"><code>#Apenas queriamos a densidade populacional sem descriminar os sexos
-densidadetotal&lt;- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)</code></pre>
-<pre><code>## Error in aggregate(POP$pop, by = list(POP$Sex, POP$Country, POP$Year), : object &#39;POP&#39; not found</code></pre>
-<pre class="r"><code>populacaototal&lt;-densidadetotal[densidadetotal$Group.1==&quot;Total&quot;,]</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;densidadetotal&#39; not found</code></pre>
-<pre class="r"><code>novopoptotal&lt;-populacaototal[,-1]</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;populacaototal&#39; not found</code></pre>
-<pre class="r"><code>setnames(novopoptotal, old = c(&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Pais&quot;,&quot;Ano&quot;, &quot;DensidadePop&quot; ))</code></pre>
-<pre><code>## Error in is.data.frame(x): object &#39;novopoptotal&#39; not found</code></pre>
-<pre class="r"><code>final2&lt;-merge(tot,novopoptotal, by=c(&quot;Ano&quot;, &quot;Pais&quot;))</code></pre>
-<pre><code>## Error in merge(tot, novopoptotal, by = c(&quot;Ano&quot;, &quot;Pais&quot;)): object &#39;tot&#39; not found</code></pre>
-<pre class="r"><code>names(final2)</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;final2&#39; not found</code></pre>
-<pre class="r"><code>mRate &lt;- 100000*(final2$Mortes/final2$DensidadePop)</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;final2&#39; not found</code></pre>
-<pre class="r"><code>mRate&lt;-round(mRate,3)</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;mRate&#39; not found</code></pre>
-<pre class="r"><code>final3&lt;-cbind(final2,mRate)</code></pre>
-<pre><code>## Error in cbind(final2, mRate): object &#39;final2&#39; not found</code></pre>
-<pre class="r"><code>MRATE &lt;- final3[,-c(1:5)]</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;final3&#39; not found</code></pre>
-<pre class="r"><code>TabelaFinal&lt;- cbind(final,MRATE)</code></pre>
-<pre><code>## Error in cbind(final, MRATE): object &#39;final&#39; not found</code></pre>
-<pre class="r"><code>TabelaFinal</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;TabelaFinal&#39; not found</code></pre>
+densidadetotal&lt;- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
+populacaototal&lt;-densidadetotal[densidadetotal$Group.1==&quot;Total&quot;,]
+
+novopoptotal&lt;-populacaototal[,-1]
+setnames(novopoptotal, old = c(&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Pais&quot;,&quot;Ano&quot;, &quot;DensidadePop&quot; ))
+
+final2&lt;-merge(tot,novopoptotal, by=c(&quot;Ano&quot;, &quot;Pais&quot;))
+names(final2)</code></pre>
+<pre><code>## [1] &quot;Ano&quot;          &quot;Pais&quot;         &quot;Sexo&quot;         &quot;Mortes&quot;      
+## [5] &quot;DensidadePop&quot;</code></pre>
+<pre class="r"><code>mRate &lt;- 100000*(final$Mortes/final$DensidadePop)
+mRate&lt;-round(mRate,3)
+final3&lt;-cbind(final,mRate)
+
+
+MRATE &lt;- final3[,-c(1:5)]
+
+TabelaFinal&lt;- cbind(final,MRATE)
+TabelaFinal</code></pre>
+<pre><code>##      Ano           Pais    Sexo Mortes DensidadePop   MRATE
+## 1   2011        Austria Females  16490      4296293 383.819
+## 2   2011        Austria   Males  18683      4078871 458.043
+## 3   2011        Belgium Females  21817      5598920 389.664
+## 4   2011        Belgium   Males  27716      5401718 513.096
+## 5   2011       Bulgaria Females  12937      3780505 342.203
+## 6   2011       Bulgaria   Males  18344      3588926 511.128
+## 7   2011        Croatia Females  10369      2221105 466.840
+## 8   2011        Croatia   Males  14543      2068751 702.985
+## 9   2011         Cyprus Females    843       430993 195.595
+## 10  2011         Cyprus   Males   1141       408758 279.138
+## 11  2011        Czechia Females  21570      5339500 403.970
+## 12  2011        Czechia   Males  27368      5147231 531.703
+## 13  2011        Denmark Females  13311      2804046 474.707
+## 14  2011        Denmark   Males  14601      2756582 529.678
+## 15  2011        Estonia Females   3044       709960 428.757
+## 16  2011        Estonia   Males   3529       619700 569.469
+## 17  2011        Finland Females   9675      2736860 353.507
+## 18  2011        Finland   Males  10870      2638416 411.990
+## 19  2011         France Females 114069     33515819 340.344
+## 20  2011         France   Males 161028     31462902 511.803
+## 21  2011        Germany Females 181139     41097465 440.755
+## 22  2011        Germany   Males 215445     39124600 550.664
+## 23  2011         Greece Females  18619      5669948 328.380
+## 24  2011         Greece   Males  30233      5453444 554.384
+## 25  2011        Hungary Females  26967      5241821 514.459
+## 26  2011        Hungary   Males  33586      4743901 707.983
+## 27  2011        Ireland Females   7342      2301455 319.016
+## 28  2011        Ireland   Males   8314      2269426 366.348
+## 29  2011          Italy Females 127920     30649434 417.365
+## 30  2011          Italy   Males 169024     28715256 588.621
+## 31  2011         Latvia Females   4995      1126666 443.343
+## 32  2011         Latvia   Males   5829       947939 614.913
+## 33  2011      Lithuania Females   6431      1645365 390.856
+## 34  2011      Lithuania   Males   8313      1407223 590.738
+## 35  2011     Luxembourg Females    862       257221 335.120
+## 36  2011     Luxembourg   Males   1026       254619 402.955
+## 37  2011          Malta Females    714       208584 342.308
+## 38  2011          Malta   Males    865       206405 419.079
+## 39  2011    Netherlands Females  35472      8412317 421.667
+## 40  2011    Netherlands   Males  41252      8243482 500.420
+## 41  2011         Poland Females  71741     19633018 365.410
+## 42  2011         Poland   Males  94173     18429700 510.985
+## 43  2011       Portugal Females  18461      5519178 334.488
+## 44  2011       Portugal   Males  27822      5053543 550.544
+## 45  2011        Romania Females  35455     10366110 342.028
+## 46  2011        Romania   Males  52856      9832949 537.540
+## 47  2011       Slovakia Females   9666      2767273 349.297
+## 48  2011       Slovakia   Males  13830      2625173 526.822
+## 49  2011       Slovenia Females   4623      1035626 446.397
+## 50  2011       Slovenia   Males   5918      1014563 583.305
+## 51  2011          Spain Females  71607     23617694 303.192
+## 52  2011          Spain   Males 119153     23049480 516.944
+## 53  2011         Sweden Females  18066      4725326 382.323
+## 54  2011         Sweden   Males  20330      4690244 433.453
+## 55  2011 United Kingdom Females 133625     32071042 416.653
+## 56  2011 United Kingdom   Males 148435     30951490 479.573
+## 57  2012        Austria Females  16870      4309977 391.417
+## 58  2012        Austria   Males  18944      4098144 462.258
+## 59  2012        Belgium Females  21265      5635601 377.333
+## 60  2012        Belgium   Males  27458      5440288 504.716
+## 61  2012       Bulgaria Females  13801      3760457 367.003
+## 62  2012       Bulgaria   Males  19749      3566767 553.695
+## 63  2012        Croatia Females  10445      2213675 471.840
+## 64  2012        Croatia   Males  14629      2062309 709.351
+## 65  2012         Cyprus Females    859       443018 193.897
+## 66  2012         Cyprus   Males   1306       418993 311.700
+## 67  2012        Czechia Females  21941      5347235 410.324
+## 68  2012        Czechia   Males  27389      5158210 530.979
+## 69  2012        Denmark Females  13575      2813740 482.454
+## 70  2012        Denmark   Males  14702      2766776 531.377
+## 71  2012        Estonia Females   2986       707079 422.301
+## 72  2012        Estonia   Males   3647       618138 589.998
+## 73  2012        Finland Females   9753      2748733 354.818
+## 74  2012        Finland   Males  11091      2652534 418.128
+## 75  2012         France Females 116329     33671600 345.481
+## 76  2012         France   Males 161355     31605383 510.530
+## 77  2012        Germany Females 180868     41097953 440.090
+## 78  2012        Germany   Males 215913     39229947 550.378
+## 79  2012         Greece Females  19056      5662522 336.528
+## 80  2012         Greece   Males  31343      5423884 577.870
+## 81  2012        Hungary Females  27432      5207259 526.803
+## 82  2012        Hungary   Males  34226      4724666 724.411
+## 83  2012        Ireland Females   7208      2315288 311.322
+## 84  2012        Ireland   Males   8179      2273999 359.675
+## 85  2012          Italy Females 128604     30667608 419.348
+## 86  2012          Italy   Males 169606     28726599 590.414
+## 87  2012         Latvia Females   5047      1110001 454.684
+## 88  2012         Latvia   Males   5960       934812 637.561
+## 89  2012      Lithuania Females   6325      1620130 390.401
+## 90  2012      Lithuania   Males   8250      1383511 596.309
+## 91  2012     Luxembourg Females    894       263033 339.881
+## 92  2012     Luxembourg   Males   1033       261820 394.546
+## 93  2012          Malta Females    774       209851 368.833
+## 94  2012          Malta   Males    882       207695 424.661
+## 95  2012    Netherlands Females  35492      8447477 420.149
+## 96  2012    Netherlands   Males  42060      8282871 507.795
+## 97  2012         Poland Females  74289     19636496 378.321
+## 98  2012         Poland   Males  96527     18427296 523.826
+## 99  2012       Portugal Females  18435      5511961 334.454
+## 100 2012       Portugal   Males  27998      5030437 556.572
+## 101 2012        Romania Females  36015     10318889 349.020
+## 102 2012        Romania   Males  53729      9777107 549.539
+## 103 2012       Slovakia Females   9987      2772570 360.207
+## 104 2012       Slovakia   Males  13504      2631752 513.118
+## 105 2012       Slovenia Females   4548      1038765 437.828
+## 106 2012       Slovenia   Males   5977      1016731 587.864
+## 107 2012          Spain Females  71867     23719207 302.991
+## 108 2012          Spain   Males 121406     23099012 525.590
+## 109 2012         Sweden Females  18444      4756021 387.803
+## 110 2012         Sweden   Males  20374      4726834 431.028
+## 111 2012 United Kingdom Females 136146     32288847 421.650
+## 112 2012 United Kingdom   Males 150724     31206241 482.993
+## 113 2013        Austria Females  16340      4328238 377.521
+## 114 2013        Austria   Males  19167      4123622 464.810
+## 115 2013        Belgium Females  21588      5665118 381.069
+## 116 2013        Belgium   Males  27477      5472856 502.060
+## 117 2013       Bulgaria Females  13297      3739479 355.584
+## 118 2013       Bulgaria   Males  20205      3545073 569.946
+## 119 2013        Croatia Females  10614      2205657 481.217
+## 120 2013        Croatia   Males  14514      2056483 705.768
+## 121 2013         Cyprus Females    883       444842 198.497
+## 122 2013         Cyprus   Males   1296       421036 307.812
+## 123 2013        Czechia Females  21494      5351776 401.624
+## 124 2013        Czechia   Males  27420      5164349 530.948
+## 125 2013        Denmark Females  13026      2823776 461.297
+## 126 2013        Denmark   Males  14439      2778852 519.603
+## 127 2013        Estonia Females   3027       704007 429.967
+## 128 2013        Estonia   Males   3645       616167 591.560
+## 129 2013        Finland Females   9811      2760052 355.464
+## 130 2013        Finland   Males  11241      2666622 421.545
+## 131 2013         France Females 115701     33827685 342.030
+## 132 2013         France   Males 160693     31772665 505.759
+## 133 2013        Germany Females 181823     41142770 441.932
+## 134 2013        Germany   Males 218369     39380976 554.504
+## 135 2013         Greece Females  19891      5637364 352.842
+## 136 2013         Greece   Males  31691      5366251 590.561
+## 137 2013        Hungary Females  27490      5192845 529.382
+## 138 2013        Hungary   Males  33365      4715953 707.492
+## 139 2013        Ireland Females   7405      2326317 318.314
+## 140 2013        Ireland   Males   8278      2283462 362.520
+## 141 2013          Italy Females 128694     30795630 417.897
+## 142 2013          Italy   Males 167502     28889597 579.800
+## 143 2013         Latvia Females   4990      1097245 454.775
+## 144 2013         Latvia   Males   5897       926580 636.426
+## 145 2013      Lithuania Females   6260      1603014 390.514
+## 146 2013      Lithuania   Males   7991      1368891 583.757
+## 147 2013     Luxembourg Females    846       268627 314.935
+## 148 2013     Luxembourg   Males    985       268412 366.973
+## 149 2013          Malta Females    701       212126 330.464
+## 150 2013          Malta   Males    836       210383 397.371
+## 151 2013    Netherlands Females  34617      8472236 408.593
+## 152 2013    Netherlands   Males  40747      8307339 490.494
+## 153 2013         Poland Females  74809     19636442 380.970
+## 154 2013         Poland   Males  95951     18426093 520.734
+## 155 2013       Portugal Females  18471      5491592 336.351
+## 156 2013       Portugal   Males  28204      4995697 564.566
+## 157 2013        Romania Females  36749     10258594 358.226
+## 158 2013        Romania   Males  54136      9761480 554.588
+## 159 2013       Slovakia Females  10073      2774857 363.010
+## 160 2013       Slovakia   Males  14174      2635979 537.713
+## 161 2013       Slovenia Females   4727      1039760 454.624
+## 162 2013       Slovenia   Males   6094      1019061 598.001
+## 163 2013          Spain Females  73519     23710130 310.074
+## 164 2013          Spain   Males 120330     23017760 522.770
+## 165 2013         Sweden Females  18706      4789988 390.523
+## 166 2013         Sweden   Males  20351      4765905 427.012
+## 167 2013 United Kingdom Females 134876     32481221 415.243
+## 168 2013 United Kingdom   Males 150508     31424121 478.957
+## 169 2014        Austria Females  16944      4352447 389.298
+## 170 2014        Austria   Males  19334      4155339 465.281
+## 171 2014        Belgium Females  21480      5687048 377.700
+## 172 2014        Belgium   Males  27199      5493792 495.086
+## 173 2014       Bulgaria Females  13710      3720732 368.476
+## 174 2014       Bulgaria   Males  19461      3524945 552.094
+## 175 2014        Croatia Females  10939      2197061 497.892
+## 176 2014        Croatia   Males  14615      2049748 713.014
+## 177 2014         Cyprus Females    849       440462 192.752
+## 178 2014         Cyprus   Males   1350       417538 323.324
+## 179 2014        Czechia Females  21387      5350039 399.754
+## 180 2014        Czechia   Males  27163      5162380 526.172
+## 181 2014        Denmark Females  13255      2834956 467.556
+## 182 2014        Denmark   Males  14703      2792279 526.559
+## 183 2014        Estonia Females   3190       700900 455.129
+## 184 2014        Estonia   Males   3728       614919 606.259
+## 185 2014        Finland Females   9822      2770906 354.469
+## 186 2014        Finland   Males  11265      2680364 420.279
+## 187 2014         France Females 119235     34120851 349.449
+## 188 2014         France   Males 163483     32045129 510.165
+## 189 2014        Germany Females 181557     41210540 440.560
+## 190 2014        Germany   Males 218618     39556923 552.667
+## 191 2014         Greece Females  19832      5613568 353.287
+## 192 2014         Greece   Males  32335      5313239 608.574
+## 193 2014        Hungary Females  27692      5173974 535.217
+## 194 2014        Hungary   Males  33287      4703391 707.723
+## 195 2014        Ireland Females   7852      2342002 335.269
+## 196 2014        Ireland   Males   8505      2295850 370.451
+## 197 2014          Italy Females 129345     31298104 413.268
+## 198 2014          Italy   Males 168052     29484564 569.966
+## 199 2014         Latvia Females   4905      1084423 452.314
+## 200 2014         Latvia   Males   5984       917045 652.531
+## 201 2014      Lithuania Females   6236      1587477 392.825
+## 202 2014      Lithuania   Males   8336      1355995 614.752
+## 203 2014     Luxembourg Females    848       274563 308.854
+## 204 2014     Luxembourg   Males   1173       275117 426.364
+## 205 2014          Malta Females    705       214891 328.073
+## 206 2014          Malta   Males    956       214533 445.619
+## 207 2014    Netherlands Females  35184      8494904 414.178
+## 208 2014    Netherlands   Males  41180      8334385 494.098
+## 209 2014         Poland Females  76782     19613892 391.467
+## 210 2014         Poland   Males  96889     18403964 526.457
+## 211 2014       Portugal Females  18610      5469281 340.264
+## 212 2014       Portugal   Males  28518      4958020 575.189
+## 213 2014        Romania Females  37081     10201259 363.494
+## 214 2014        Romania   Males  55541      9746052 569.882
+## 215 2014       Slovakia Females  10480      2776889 377.401
+## 216 2014       Slovakia   Males  13907      2639060 526.968
+## 217 2014       Slovenia Females   4604      1040211 442.603
+## 218 2014       Slovenia   Males   5987      1020874 586.458
+## 219 2014          Spain Females  72696     23634738 307.581
+## 220 2014          Spain   Males 119071     22877461 520.473
+## 221 2014         Sweden Females  18598      4830507 385.011
+## 222 2014         Sweden   Males  20669      4814357 429.320
+## 223 2014 United Kingdom Females 136374     32687816 417.201
+## 224 2014 United Kingdom   Males 153286     31663387 484.111
+## 225 2015        Austria Females  16692      4384529 380.702
+## 226 2015        Austria   Males  19548      4200397 465.385
+## 227 2015        Belgium Females  21434      5713206 375.166
+## 228 2015        Belgium   Males  27209      5524068 492.554
+## 229 2015       Bulgaria Females  13756      3700183 371.765
+## 230 2015       Bulgaria   Males  19279      3502015 550.512
+## 231 2015        Croatia Females  10778      2186089 493.027
+## 232 2015        Croatia   Males  14799      2039227 725.716
+## 233 2015         Cyprus Females    971       435183 223.125
+## 234 2015         Cyprus   Males   1361       411825 330.480
+## 235 2015        Czechia Females  21331      5361348 397.866
+## 236 2015        Czechia   Males  26963      5176927 520.830
+## 237 2015        Denmark Females  13086      2848701 459.367
+## 238 2015        Denmark   Males  14589      2811014 518.994
+## 239 2015        Estonia Females   3150       700166 449.893
+## 240 2015        Estonia   Males   3808       614704 619.485
+## 241 2015        Finland Females   9978      2779890 358.935
+## 242 2015        Finland   Males  11539      2691863 428.662
+## 243 2015         France Females 121773     34283895 355.190
+## 244 2015         France   Males 165058     32174258 513.013
+## 245 2015        Germany Females 184078     41362080 445.040
+## 246 2015        Germany   Males 220202     39835457 552.779
+## 247 2015         Greece Females  20382      5589628 364.640
+## 248 2015         Greece   Males  33029      5268390 626.928
+## 249 2015        Hungary Females  27957      5159792 541.824
+## 250 2015        Hungary   Males  33005      4695779 702.865
+## 251 2015        Ireland Females   7484      2364285 316.544
+## 252 2015        Ireland   Males   8582      2313342 370.978
+## 253 2015          Italy Females 131809     31294022 421.195
+## 254 2015          Italy   Males 167914     29501590 569.169
+## 255 2015         Latvia Females   5119      1074889 476.235
+## 256 2015         Latvia   Males   5625       911207 617.313
+## 257 2015      Lithuania Females   6582      1575005 417.903
+## 258 2015      Lithuania   Males   8538      1346257 634.203
+## 259 2015     Luxembourg Females    911       280986 324.215
+## 260 2015     Luxembourg   Males    966       281972 342.587
+## 261 2015          Malta Females    743       219203 338.955
+## 262 2015          Malta   Males    927       220488 420.431
+## 263 2015    Netherlands Females  36034      8527868 422.544
+## 264 2015    Netherlands   Males  42483      8372858 507.389
+## 265 2015         Poland Females  80076     19608451 408.375
+## 266 2015         Poland   Males 101800     18397163 553.346
+## 267 2015       Portugal Females  18859      5451156 345.963
+## 268 2015       Portugal   Males  28894      4923666 586.839
+## 269 2015        Romania Females  37945     10163573 373.343
+## 270 2015        Romania   Males  55914      9707074 576.013
+## 271 2015       Slovakia Females  10626      2779021 382.365
+## 272 2015       Slovakia   Males  14000      2642328 529.836
+## 273 2015       Slovenia Females   4837      1040645 464.808
+## 274 2015       Slovenia   Males   6348      1022229 620.996
+## 275 2015          Spain Females  73788     23623019 312.356
+## 276 2015          Spain   Males 119487     22826546 523.456
+## 277 2015         Sweden Females  18562      4875115 380.750
+## 278 2015         Sweden   Males  20804      4872240 426.990
+## 279 2015 United Kingdom Females 136446     32919294 414.486
+## 280 2015 United Kingdom   Males 154574     31934099 484.041
+## 281 2016        Austria Females  16894      4427918 381.534
+## 282 2016        Austria   Males  19552      4272553 457.619
+## 283 2016        Belgium Females  21311      5741853 371.152
+## 284 2016        Belgium   Males  27294      5569264 490.083
+## 285 2016       Bulgaria Females  13219      3676607 359.543
+## 286 2016       Bulgaria   Males  18526      3477177 532.789
+## 287 2016        Croatia Females  10734      2167872 495.140
+## 288 2016        Croatia   Males  14996      2022797 741.350
+## 289 2016         Cyprus Females    918       435627 210.731
+## 290 2016         Cyprus   Males   1338       412692 324.213
+## 291 2016        Czechia Females  21438      5367513 399.403
+## 292 2016        Czechia   Males  27356      5186330 527.464
+## 293 2016        Denmark Females  13581      2869364 473.310
+## 294 2016        Denmark   Males  14834      2837887 522.713
+## 295 2016        Estonia Females   3173       699236 453.781
+## 296 2016        Estonia   Males   3666       616708 594.447
+## 297 2016        Finland Females  10270      2785818 368.653
+## 298 2016        Finland   Males  11971      2701490 443.126
+## 299 2016         France Females 124552     34391005 362.164
+## 300 2016         France   Males 165676     32247386 513.766
+## 301 2016        Germany Females 187913     41661561 451.046
+## 302 2016        Germany   Males 223614     40514123 551.941
+## 303 2016         Greece Females  21179      5559538 380.949
+## 304 2016         Greece   Males  32641      5224210 624.803
+## 305 2016        Hungary Females  27706      5141966 538.821
+## 306 2016        Hungary   Males  33821      4688519 721.358
+## 307 2016        Ireland Females   7939      2387145 332.573
+## 308 2016        Ireland   Males   8601      2339141 367.699
+## 309 2016          Italy Females 132689     31209230 425.159
+## 310 2016          Italy   Males 170121     29456321 577.536
+## 311 2016         Latvia Females   4988      1064658 468.507
+## 312 2016         Latvia   Males   5842       904299 646.025
+## 313 2016      Lithuania Females   6504      1558951 417.204
+## 314 2016      Lithuania   Males   8295      1329607 623.869
+## 315 2016     Luxembourg Females    845       287056 294.368
+## 316 2016     Luxembourg   Males   1105       289193 382.098
+## 317 2016          Malta Females    776       224019 346.399
+## 318 2016          Malta   Males    920       226396 406.368
+## 319 2016    Netherlands Females  36893      8561985 430.893
+## 320 2016    Netherlands   Males  43547      8417135 517.361
+## 321 2016         Poland Females  80093     19590169 408.843
+## 322 2016         Poland   Males 101577     18377040 552.739
+## 323 2016       Portugal Females  19419      5439821 356.979
+## 324 2016       Portugal   Males  29515      4901509 602.161
+## 325 2016        Romania Females  38122     10110852 377.040
+## 326 2016        Romania   Males  56665      9649733 587.218
+## 327 2016       Slovakia Females  10667      2780170 383.682
+## 328 2016       Slovakia   Males  14097      2646082 532.750
+## 329 2016       Slovenia Females   4833      1040855 464.330
+## 330 2016       Slovenia   Males   6392      1023333 624.626
+## 331 2016          Spain Females  75084     23632635 317.713
+## 332 2016          Spain   Males 121105     22807464 530.988
+## 333 2016         Sweden Females  18636      4920051 378.777
+## 334 2016         Sweden   Males  20969      4930966 425.251
+## 335 2016 United Kingdom Females 138959     33152984 419.145
+## 336 2016 United Kingdom   Males 157185     32226060 487.757
+## 337 2017        Austria Females  16678      4460424 373.911
+## 338 2017        Austria   Males  19875      4312441 460.876
+## 339 2017       Bulgaria Females  13341      3651881 365.319
+## 340 2017       Bulgaria   Males  18713      3449978 542.409
+## 341 2017        Croatia Females  10556      2149003 491.205
+## 342 2017        Croatia   Males  14472      2005210 721.720
+## 343 2017         Cyprus Females   1019       438139 232.575
+## 344 2017         Cyprus   Males   1457       416663 349.683
+## 345 2017        Czechia Females  21388      5378133 397.684
+## 346 2017        Czechia   Males  27606      5200687 530.814
+## 347 2017        Estonia Females   3203       698097 458.819
+## 348 2017        Estonia   Males   3720       617538 602.392
+## 349 2017        Finland Females  10281      2790970 368.367
+## 350 2017        Finland   Males  12029      2712327 443.494
+## 351 2017        Germany Females 185745     41824535 444.105
+## 352 2017        Germany   Males 219363     40697118 539.014
+## 353 2017         Greece Females  20491      5546916 369.412
+## 354 2017         Greece   Males  32939      5221277 630.861
+## 355 2017        Hungary Females  27985      5122270 546.340
+## 356 2017        Hungary   Males  33212      4675291 710.373
+## 357 2017        Ireland Females   7786      2416465 322.206
+## 358 2017        Ireland   Males   8726      2367918 368.509
+## 359 2017      Lithuania Females   6411      1535718 417.459
+## 360 2017      Lithuania   Males   8039      1312186 612.642
+## 361 2017     Luxembourg Females    948       294026 322.420
+## 362 2017     Luxembourg   Males   1011       296641 340.816
+## 363 2017    Netherlands Females  36205      8606405 420.675
+## 364 2017    Netherlands   Males  43542      8475102 513.764
+## 365 2017         Poland Females  81074     19595127 413.746
+## 366 2017         Poland   Males 100332     18377837 545.940
+## 367 2017        Romania Females  38546     10041772 383.857
+## 368 2017        Romania   Males  56370      9602578 587.030
+## 369 2017       Slovakia Females  10750      2783659 386.182
+## 370 2017       Slovakia   Males  14076      2651684 530.832
+## 371 2017       Slovenia Females   4934      1040770 474.072
+## 372 2017       Slovenia   Males   6447      1025125 628.899
+## 373 2017          Spain Females  75923     23693426 320.439
+## 374 2017          Spain   Males 120615     22834598 528.212</code></pre>
 
 
 
