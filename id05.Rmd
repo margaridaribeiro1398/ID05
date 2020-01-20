@@ -116,9 +116,9 @@ setnames(novopoptotal, old = c("Group.2","Group.3","x"), new = c("Pais","Ano", "
 final2<-merge(tot,novopoptotal, by=c("Ano", "Pais"))
 names(final2)
 
-mRate <- 100000*(final2$Mortes/final2$DensidadePop)
+mRate <- 100000*(final$Mortes/final$DensidadePop)
 mRate<-round(mRate,3)
-final3<-cbind(final2,mRate)
+final3<-cbind(final,mRate)
 
 
 MRATE <- final3[,-c(1:5)]
