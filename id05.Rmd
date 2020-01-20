@@ -50,6 +50,25 @@ POP <- na.omit(POP)
 ```
 
 
+```{r all idades pop}
+totoid<- aggregate(POP$pop, by=list(POP$Year, POP$Country, POP$Sex), FUN=sum)
+#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
+setnames(totoid, old = c("Group.1","Group.2","Group.3","x"), new = c("Year", "Country", "Sex","pop"))
+names(totoid)
+names(POP)
+totoid<- totoid[-c(1063:1593),]
+
+
+
+ageGroup<-rep("All", times = 1062)
+totoid<-cbind(totoid,ageGroup)
+
+POP<- rbind(POP, totoid)
+
+```
+
+
+
 ```{r organizar dataframe dos cancros}
 
 #Cancros
@@ -66,7 +85,7 @@ CANCRO$Year<-sub("Males", "", CANCRO$Year) #Tirar a palavra Males dos anos
 CANCRO$Year<-sub(".", "", CANCRO$Year) #Tirar o underscore dos anos
 
 CANCRO <- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
-str(CANCRO)
+
 
 CANCRO<- CANCRO[CANCRO$CancerSite=="Bladder",]
 View(CANCRO)
@@ -74,68 +93,42 @@ View(CANCRO)
 ```
 
 
+```{r all idades cancro}
+mortes<- aggregate(CANCRO$cancer, by=list(CANCRO$Year, CANCRO$Country, CANCRO$Sex, CANCRO$CancerSite), FUN=sum)
+#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
+setnames(mortes, old = c("Group.1","Group.2","Group.3","Group.4","x"), new = c("Year", "Country", "Sex","CancerSite","cancer"))
+names(mortes)
+names(CANCRO)
+
+
+ageGroup<-rep("All", times = 374)
+mortes<-cbind(mortes,ageGroup)
+
+CANCRO<- rbind(CANCRO, mortes)
+
+```
+
+
+
 ```{r criar a dataset}
 
 total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
 #Junção do CANCRO e POP para termos as duas dataframes cruzadas
 
-tot<- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN=sum)
-#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
-setnames(tot, old = c("Group.1","Group.2","Group.3","x"), new = c("Ano", "Pais", "Sexo","Mortes"))
-names(tot)
-#Falta adicionar a coluna com o total da populacao de cada pais em cada ano respectivamente
-
-
-totpop<- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
-#Dataframe do nr de população relativa por Ano, País e Sexo
-
-
-populacaototal_FEM<-totpop[totpop$Group.1=="Females",] #desnidade populacional do sexo feminino
-
-populacaototal_MASC<-totpop[totpop$Group.1=="Males",] #densidade populacional do sexo masculino
-
-setnames(populacaototal_FEM, old = c("Group.1","Group.2","Group.3","x"), new = c("Sexo","Pais","Ano", "DensidadePop" ))
-
-populacaototal<- merge(populacaototal_FEM,populacaototal_MASC, by=c("Ano", "Pais")) #dataframe com a população por sexo
-View(populacaototal)
-
-populacaototal_sexos<-rbind(populacaototal_FEM,populacaototal_MASC) 
-#Junção dos sexos e da densidade populacional numa só coluna, cada variável
-
-final<- merge(tot,populacaototal_sexos, by=c("Ano", "Pais","Sexo")) #Dataframe com a população total e o nr de mortes
 
 ```
 
 
 ```{r mrate2}
 
-#Apenas queriamos a densidade populacional sem descriminar os sexos
-densidadetotal<- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
-populacaototal<-densidadetotal[densidadetotal$Group.1=="Total",]
-
-novopoptotal<-populacaototal[,-1]
-setnames(novopoptotal, old = c("Group.2","Group.3","x"), new = c("Pais","Ano", "DensidadePop" ))
-
-final2<-merge(tot,novopoptotal, by=c("Ano", "Pais"))
-names(final2)
-
-mRate <- 100000*(final$Mortes/final$DensidadePop)
+mRate <- 100000*(total$cancer/total$pop)
 mRate<-round(mRate,3)
-final3<-cbind(final,mRate)
 
-
-MRATE <- final3[,-c(1:5)]
-
-TabelaFinal<- cbind(final,MRATE)
+TabelaFinal<- cbind(total,mRate)
 TabelaFinal
 View(TabelaFinal)
 ```
 
-```{r questão 1}
-selecionar <- TabelaFinal[Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & (Year %% 5) == 0,
- .(Country, Year, pctWiP)]
-WPEU
 
-```
 
 
