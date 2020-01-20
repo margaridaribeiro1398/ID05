@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Grupo 05" />
@@ -269,7 +269,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -331,6 +330,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -342,18 +342,6 @@ summary {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -394,7 +382,153 @@ names(dadospopulacao)</code></pre>
 ##  [7] &quot;X2001&quot;    &quot;X2002&quot;    &quot;X2003&quot;    &quot;X2004&quot;    &quot;X2005&quot;    &quot;X2006&quot;   
 ## [13] &quot;X2007&quot;    &quot;X2008&quot;    &quot;X2009&quot;    &quot;X2010&quot;    &quot;X2011&quot;    &quot;X2012&quot;   
 ## [19] &quot;X2013&quot;    &quot;X2014&quot;    &quot;X2015&quot;    &quot;X2016&quot;    &quot;X2017&quot;    &quot;X2018&quot;</code></pre>
-<p>Tebtar</p>
+<pre class="r"><code>install.packages(&quot;data.table&quot;)</code></pre>
+<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>install.packages(&quot;rmarkdown&quot;)</code></pre>
+<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>install.packages(&quot;ggplot2&quot;)</code></pre>
+<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>install.packages(&quot;tidyverse&quot;)</code></pre>
+<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>install.packages(&quot;dplyr&quot;)</code></pre>
+<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>install.packages(&quot;here&quot;)</code></pre>
+<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>install.packages(c(&quot;tidyr&quot;, &quot;devtools&quot;))</code></pre>
+<pre><code>## Installing packages into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>library(data.table)
+library(rmarkdown)
+library(tidyr)</code></pre>
+<pre><code>## Error: package or namespace load failed for &#39;tidyr&#39; in loadNamespace(j &lt;- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
+##  there is no package called &#39;dplyr&#39;</code></pre>
+<pre class="r"><code>library(devtools)</code></pre>
+<pre><code>## Loading required package: usethis</code></pre>
+<pre><code>## Error: package or namespace load failed for &#39;usethis&#39; in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+##  there is no package called &#39;fs&#39;</code></pre>
+<pre><code>## Error: package &#39;usethis&#39; could not be loaded</code></pre>
+<pre class="r"><code>library(ggplot2)
+library(tidyverse)</code></pre>
+<pre><code>## Error: package or namespace load failed for &#39;tidyverse&#39; in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+##  there is no package called &#39;dplyr&#39;</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## Error in library(dplyr): there is no package called &#39;dplyr&#39;</code></pre>
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>## here() starts at C:/Users/Margarida/Desktop/ID05/ID05</code></pre>
+<pre class="r"><code>novopop&lt;-dadospopulacao[,-c(3,5)]
+names(novopop)</code></pre>
+<pre><code>##  [1] &quot;Country&quot;  &quot;Sex&quot;      &quot;ageGroup&quot; &quot;X2000&quot;    &quot;X2001&quot;    &quot;X2002&quot;   
+##  [7] &quot;X2003&quot;    &quot;X2004&quot;    &quot;X2005&quot;    &quot;X2006&quot;    &quot;X2007&quot;    &quot;X2008&quot;   
+## [13] &quot;X2009&quot;    &quot;X2010&quot;    &quot;X2011&quot;    &quot;X2012&quot;    &quot;X2013&quot;    &quot;X2014&quot;   
+## [19] &quot;X2015&quot;    &quot;X2016&quot;    &quot;X2017&quot;    &quot;X2018&quot;</code></pre>
+<pre class="r"><code>POP&lt;-gather(novopop,&quot;Year&quot;,&quot;pop&quot;,4:22)</code></pre>
+<pre><code>## Error in gather(novopop, &quot;Year&quot;, &quot;pop&quot;, 4:22): could not find function &quot;gather&quot;</code></pre>
+<pre class="r"><code>POP$Year&lt;-sub(&quot;.&quot;, &quot;&quot;, POP$Year)  #Tirar o primeiro caracter (X) dos anos</code></pre>
+<pre><code>## Error in sub(&quot;.&quot;, &quot;&quot;, POP$Year): object &#39;POP&#39; not found</code></pre>
+<pre class="r"><code>POP &lt;- na.omit(POP)</code></pre>
+<pre><code>## Error in na.omit(POP): object &#39;POP&#39; not found</code></pre>
+<pre class="r"><code>#Cancros
+names(dadoscancro)</code></pre>
+<pre><code>##  [1] &quot;Country&quot;      &quot;Cause&quot;        &quot;CancerSite&quot;   &quot;ageStart&quot;    
+##  [5] &quot;ageGroup&quot;     &quot;ageLabel&quot;     &quot;Females_2011&quot; &quot;Females_2012&quot;
+##  [9] &quot;Females_2013&quot; &quot;Females_2014&quot; &quot;Females_2015&quot; &quot;Females_2016&quot;
+## [13] &quot;Females_2017&quot; &quot;Males_2011&quot;   &quot;Males_2012&quot;   &quot;Males_2013&quot;  
+## [17] &quot;Males_2014&quot;   &quot;Males_2015&quot;   &quot;Males_2016&quot;   &quot;Males_2017&quot;</code></pre>
+<pre class="r"><code>novocancro&lt;-dadoscancro[,-c(2,4,6)]
+names(novocancro)</code></pre>
+<pre><code>##  [1] &quot;Country&quot;      &quot;CancerSite&quot;   &quot;ageGroup&quot;     &quot;Females_2011&quot;
+##  [5] &quot;Females_2012&quot; &quot;Females_2013&quot; &quot;Females_2014&quot; &quot;Females_2015&quot;
+##  [9] &quot;Females_2016&quot; &quot;Females_2017&quot; &quot;Males_2011&quot;   &quot;Males_2012&quot;  
+## [13] &quot;Males_2013&quot;   &quot;Males_2014&quot;   &quot;Males_2015&quot;   &quot;Males_2016&quot;  
+## [17] &quot;Males_2017&quot;</code></pre>
+<pre class="r"><code>CANCRO&lt;-gather(novocancro,&quot;Year&quot;,&quot;cancer&quot;,4:17)</code></pre>
+<pre><code>## Error in gather(novocancro, &quot;Year&quot;, &quot;cancer&quot;, 4:17): could not find function &quot;gather&quot;</code></pre>
+<pre class="r"><code>Sex&lt;- rep(c(&quot;Females&quot;, &quot;Males&quot;), times = c(63504,63504))
+CANCRO&lt;-cbind(CANCRO,Sex)</code></pre>
+<pre><code>## Error in cbind(CANCRO, Sex): object &#39;CANCRO&#39; not found</code></pre>
+<pre class="r"><code>CANCRO$Year&lt;-sub(&quot;Females&quot;, &quot;&quot;, CANCRO$Year) #Tirar a palavra Females dos anos</code></pre>
+<pre><code>## Error in sub(&quot;Females&quot;, &quot;&quot;, CANCRO$Year): object &#39;CANCRO&#39; not found</code></pre>
+<pre class="r"><code>CANCRO$Year&lt;-sub(&quot;Males&quot;, &quot;&quot;, CANCRO$Year) #Tirar a palavra Males dos anos</code></pre>
+<pre><code>## Error in sub(&quot;Males&quot;, &quot;&quot;, CANCRO$Year): object &#39;CANCRO&#39; not found</code></pre>
+<pre class="r"><code>CANCRO$Year&lt;-sub(&quot;.&quot;, &quot;&quot;, CANCRO$Year) #Tirar o underscore dos anos</code></pre>
+<pre><code>## Error in sub(&quot;.&quot;, &quot;&quot;, CANCRO$Year): object &#39;CANCRO&#39; not found</code></pre>
+<pre class="r"><code>CANCRO &lt;- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS</code></pre>
+<pre><code>## Error in na.omit(CANCRO): object &#39;CANCRO&#39; not found</code></pre>
+<pre class="r"><code>str(CANCRO)</code></pre>
+<pre><code>## Error in str(CANCRO): object &#39;CANCRO&#39; not found</code></pre>
+<pre class="r"><code>total&lt;-merge(POP,CANCRO, by=c(&quot;Country&quot;, &quot;Sex&quot;, &quot;Year&quot;, &quot;ageGroup&quot;))</code></pre>
+<pre><code>## Error in merge(POP, CANCRO, by = c(&quot;Country&quot;, &quot;Sex&quot;, &quot;Year&quot;, &quot;ageGroup&quot;)): object &#39;POP&#39; not found</code></pre>
+<pre class="r"><code>#Junção do CANCRO e POP para termos as duas dataframes cruzadas
+
+tot&lt;- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN=sum)</code></pre>
+<pre><code>## Error in aggregate(total$cancer, by = list(total$Year, total$Country, : object &#39;total&#39; not found</code></pre>
+<pre class="r"><code>#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
+setnames(tot, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Ano&quot;, &quot;Pais&quot;, &quot;Sexo&quot;,&quot;Mortes&quot;))</code></pre>
+<pre><code>## Error in is.data.frame(x): object &#39;tot&#39; not found</code></pre>
+<pre class="r"><code>names(tot)</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;tot&#39; not found</code></pre>
+<pre class="r"><code>#Falta adicionar a coluna com o total da populacao de cada pais em cada ano respectivamente
+
+
+totpop&lt;- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)</code></pre>
+<pre><code>## Error in aggregate(POP$pop, by = list(POP$Sex, POP$Country, POP$Year), : object &#39;POP&#39; not found</code></pre>
+<pre class="r"><code>#Dataframe do nr de população relativa por Ano, País e Sexo
+
+
+populacaototal_FEM&lt;-totpop[totpop$Group.1==&quot;Females&quot;,] #desnidade populacional do sexo feminino</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;totpop&#39; not found</code></pre>
+<pre class="r"><code>populacaototal_MASC&lt;-totpop[totpop$Group.1==&quot;Males&quot;,] #densidade populacional do sexo masculino</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;totpop&#39; not found</code></pre>
+<pre class="r"><code>setnames(populacaototal_FEM, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Sexo&quot;,&quot;Pais&quot;,&quot;Ano&quot;, &quot;DensidadePop&quot; ))</code></pre>
+<pre><code>## Error in is.data.frame(x): object &#39;populacaototal_FEM&#39; not found</code></pre>
+<pre class="r"><code>populacaototal&lt;- merge(populacaototal_FEM,populacaototal_MASC, by=c(&quot;Ano&quot;, &quot;Pais&quot;)) #dataframe com a população por sexo</code></pre>
+<pre><code>## Error in merge(populacaototal_FEM, populacaototal_MASC, by = c(&quot;Ano&quot;, : object &#39;populacaototal_FEM&#39; not found</code></pre>
+<pre class="r"><code>View(populacaototal)</code></pre>
+<pre><code>## Error in as.data.frame(x): object &#39;populacaototal&#39; not found</code></pre>
+<pre class="r"><code>populacaototal_sexos&lt;-rbind(populacaototal_FEM,populacaototal_MASC) </code></pre>
+<pre><code>## Error in rbind(populacaototal_FEM, populacaototal_MASC): object &#39;populacaototal_FEM&#39; not found</code></pre>
+<pre class="r"><code>#Junção dos sexos e da densidade populacional numa só coluna, cada variável
+
+final&lt;- merge(tot,populacaototal_sexos, by=c(&quot;Ano&quot;, &quot;Pais&quot;,&quot;Sexo&quot;)) #Dataframe com a população total e o nr de mortes</code></pre>
+<pre><code>## Error in merge(tot, populacaototal_sexos, by = c(&quot;Ano&quot;, &quot;Pais&quot;, &quot;Sexo&quot;)): object &#39;tot&#39; not found</code></pre>
+<pre class="r"><code>#Apenas queriamos a densidade populacional sem descriminar os sexos
+densidadetotal&lt;- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)</code></pre>
+<pre><code>## Error in aggregate(POP$pop, by = list(POP$Sex, POP$Country, POP$Year), : object &#39;POP&#39; not found</code></pre>
+<pre class="r"><code>populacaototal&lt;-densidadetotal[densidadetotal$Group.1==&quot;Total&quot;,]</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;densidadetotal&#39; not found</code></pre>
+<pre class="r"><code>novopoptotal&lt;-populacaototal[,-1]</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;populacaototal&#39; not found</code></pre>
+<pre class="r"><code>setnames(novopoptotal, old = c(&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Pais&quot;,&quot;Ano&quot;, &quot;DensidadePop&quot; ))</code></pre>
+<pre><code>## Error in is.data.frame(x): object &#39;novopoptotal&#39; not found</code></pre>
+<pre class="r"><code>final2&lt;-merge(tot,novopoptotal, by=c(&quot;Ano&quot;, &quot;Pais&quot;))</code></pre>
+<pre><code>## Error in merge(tot, novopoptotal, by = c(&quot;Ano&quot;, &quot;Pais&quot;)): object &#39;tot&#39; not found</code></pre>
+<pre class="r"><code>names(final2)</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;final2&#39; not found</code></pre>
+<pre class="r"><code>mRate &lt;- 100000*(final2$Mortes/final2$DensidadePop)</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;final2&#39; not found</code></pre>
+<pre class="r"><code>mRate&lt;-round(mRate,3)</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;mRate&#39; not found</code></pre>
+<pre class="r"><code>final3&lt;-cbind(final2,mRate)</code></pre>
+<pre><code>## Error in cbind(final2, mRate): object &#39;final2&#39; not found</code></pre>
+<pre class="r"><code>MRATE &lt;- final3[,-c(1:5)]</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;final3&#39; not found</code></pre>
+<pre class="r"><code>TabelaFinal&lt;- cbind(final,MRATE)</code></pre>
+<pre><code>## Error in cbind(final, MRATE): object &#39;final&#39; not found</code></pre>
+<pre class="r"><code>TabelaFinal</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;TabelaFinal&#39; not found</code></pre>
 
 
 
@@ -413,6 +547,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

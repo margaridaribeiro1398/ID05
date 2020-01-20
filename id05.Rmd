@@ -5,10 +5,13 @@ date: "16/01/2020"
 output: html_document
 ---
 
+```{r, echo=FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
 ```{r read dados cancro}
 dadoscancro<- read.csv(file = "data/CancerMortalityEU.csv")
 names(dadoscancro)
-View(dadoscancro)
 
 ```
 
@@ -17,48 +20,33 @@ View(dadoscancro)
 
 dadospopulacao <- read.csv( file = "data/PopulationEU.csv")
 names(dadospopulacao)
-View(dadospopulacao)
-
 ```
 
 ```{r packages}
-
 install.packages("data.table")
-library(data.table)
 install.packages("rmarkdown")
-library(rmarkdown)
 install.packages("ggplot2")
-library(ggplot2)
 install.packages("tidyverse")
-library(tidyverse)
 install.packages("dplyr")
-library(dplyr)
 install.packages("here")
-library(here)
 install.packages(c("tidyr", "devtools"))
-library("tidyr")
-library("devtools")
-
+library(data.table)
+library(rmarkdown)
+library(tidyr)
+library(devtools)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(here)
 ```
 
 ```{r organizar dataframe da população}
-
-tail(dadoscancro, n=10)
-head(dadospopulacao, n=10)
-
 novopop<-dadospopulacao[,-c(3,5)]
 names(novopop)
-View(novopop)
 
 POP<-gather(novopop,"Year","pop",4:22)
-
-
 POP$Year<-sub(".", "", POP$Year)  #Tirar o primeiro caracter (X) dos anos
-View(POP)
-
 POP <- na.omit(POP)
-tail(POP)
-
 ```
 
 
@@ -68,28 +56,17 @@ tail(POP)
 names(dadoscancro)
 novocancro<-dadoscancro[,-c(2,4,6)]
 names(novocancro)
-View(novocancro)
 
 CANCRO<-gather(novocancro,"Year","cancer",4:17)
 Sex<- rep(c("Females", "Males"), times = c(63504,63504))
 CANCRO<-cbind(CANCRO,Sex)
-
 
 CANCRO$Year<-sub("Females", "", CANCRO$Year) #Tirar a palavra Females dos anos
 CANCRO$Year<-sub("Males", "", CANCRO$Year) #Tirar a palavra Males dos anos
 CANCRO$Year<-sub(".", "", CANCRO$Year) #Tirar o underscore dos anos
 
 CANCRO <- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
-View(CANCRO)
 str(CANCRO)
-
-```
-
-
-```{r names}
-
-names(POP)
-names(CANCRO)
 
 ```
 
@@ -97,21 +74,18 @@ names(CANCRO)
 ```{r criar a dataset}
 
 total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
-View(total)
 #Junção do CANCRO e POP para termos as duas dataframes cruzadas
 
 tot<- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
-
-View(tot)
 setnames(tot, old = c("Group.1","Group.2","Group.3","x"), new = c("Ano", "Pais", "Sexo","Mortes"))
 names(tot)
-View(tot)
 #Falta adicionar a coluna com o total da populacao de cada pais em cada ano respectivamente
 
 
-totpop<- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum) 
+totpop<- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
 #Dataframe do nr de população relativa por Ano, País e Sexo
+
 
 populacaototal_FEM<-totpop[totpop$Group.1=="Females",] #desnidade populacional do sexo feminino
 
@@ -119,47 +93,39 @@ populacaototal_MASC<-totpop[totpop$Group.1=="Males",] #densidade populacional do
 
 setnames(populacaototal_FEM, old = c("Group.1","Group.2","Group.3","x"), new = c("Sexo","Pais","Ano", "DensidadePop" ))
 
-View(populacaototal_FEM)
-View(populacaototal_MASC)
-
 populacaototal<- merge(populacaototal_FEM,populacaototal_MASC, by=c("Ano", "Pais")) #dataframe com a população por sexo
 View(populacaototal)
 
 populacaototal_sexos<-rbind(populacaototal_FEM,populacaototal_MASC) 
 #Junção dos sexos e da densidade populacional numa só coluna, cada variável
 
-View(populacaototal_sexos)
-
 final<- merge(tot,populacaototal_sexos, by=c("Ano", "Pais","Sexo")) #Dataframe com a população total e o nr de mortes
-View(final)
 
 ```
 
-```{r mrate}
+
+```{r mrate2}
+
+#Apenas queriamos a densidade populacional sem descriminar os sexos
+densidadetotal<- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
+populacaototal<-densidadetotal[densidadetotal$Group.1=="Total",]
 
 novopoptotal<-populacaototal[,-1]
-View(novopoptotal)
 setnames(novopoptotal, old = c("Group.2","Group.3","x"), new = c("Pais","Ano", "DensidadePop" ))
-View(novopoptotal)
 
-totpop<- tapply(POP$pop, FUN=sum)
-mRate <- 100000*(final$Mortes/final$DensidadePop)
+final2<-merge(tot,novopoptotal, by=c("Ano", "Pais"))
+names(final2)
+
+mRate <- 100000*(final2$Mortes/final2$DensidadePop)
 mRate<-round(mRate,3)
-final<-cbind(final,mRate)
-View(final)
-
-Mrate=funcion(data){
-  for i in final:
-    i=1
-    mrate=100000*(Mortes[i]/(DensidadePop[i]+DensidadePop[i+1]))
-  print(mrate)
-  i=i+1
-}
+final3<-cbind(final2,mRate)
 
 
+MRATE <- final3[,-c(1:5)]
 
+TabelaFinal<- cbind(final,MRATE)
+TabelaFinal
 
 ```
-
 
 
