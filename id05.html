@@ -371,11 +371,10 @@ summary {
 
 <pre class="r"><code>dadoscancro&lt;- read.csv(file = &quot;data/CancerMortalityEU.csv&quot;)
 names(dadoscancro)</code></pre>
-<pre><code>##  [1] &quot;Country&quot;      &quot;Cause&quot;        &quot;CancerSite&quot;   &quot;ageStart&quot;    
-##  [5] &quot;ageGroup&quot;     &quot;ageLabel&quot;     &quot;Females_2011&quot; &quot;Females_2012&quot;
-##  [9] &quot;Females_2013&quot; &quot;Females_2014&quot; &quot;Females_2015&quot; &quot;Females_2016&quot;
-## [13] &quot;Females_2017&quot; &quot;Males_2011&quot;   &quot;Males_2012&quot;   &quot;Males_2013&quot;  
-## [17] &quot;Males_2014&quot;   &quot;Males_2015&quot;   &quot;Males_2016&quot;   &quot;Males_2017&quot;</code></pre>
+<pre><code>##  [1] &quot;Country&quot;      &quot;Cause&quot;        &quot;CancerSite&quot;   &quot;ageStart&quot;     &quot;ageGroup&quot;    
+##  [6] &quot;ageLabel&quot;     &quot;Females_2011&quot; &quot;Females_2012&quot; &quot;Females_2013&quot; &quot;Females_2014&quot;
+## [11] &quot;Females_2015&quot; &quot;Females_2016&quot; &quot;Females_2017&quot; &quot;Males_2011&quot;   &quot;Males_2012&quot;  
+## [16] &quot;Males_2013&quot;   &quot;Males_2014&quot;   &quot;Males_2015&quot;   &quot;Males_2016&quot;   &quot;Males_2017&quot;</code></pre>
 <pre class="r"><code>dadospopulacao &lt;- read.csv( file = &quot;data/PopulationEU.csv&quot;)
 names(dadospopulacao)</code></pre>
 <pre><code>##  [1] &quot;Country&quot;  &quot;Sex&quot;      &quot;ageStart&quot; &quot;ageGroup&quot; &quot;ageLabel&quot; &quot;X2000&quot;   
@@ -383,31 +382,31 @@ names(dadospopulacao)</code></pre>
 ## [13] &quot;X2007&quot;    &quot;X2008&quot;    &quot;X2009&quot;    &quot;X2010&quot;    &quot;X2011&quot;    &quot;X2012&quot;   
 ## [19] &quot;X2013&quot;    &quot;X2014&quot;    &quot;X2015&quot;    &quot;X2016&quot;    &quot;X2017&quot;    &quot;X2018&quot;</code></pre>
 <pre class="r"><code>install.packages(&quot;data.table&quot;)</code></pre>
-<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+<pre><code>## Installing package into &#39;C:/Users/Utilizador/Documents/R/win-library/3.6&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
 <pre class="r"><code>install.packages(&quot;rmarkdown&quot;)</code></pre>
-<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+<pre><code>## Installing package into &#39;C:/Users/Utilizador/Documents/R/win-library/3.6&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
 <pre class="r"><code>install.packages(&quot;ggplot2&quot;)</code></pre>
-<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+<pre><code>## Installing package into &#39;C:/Users/Utilizador/Documents/R/win-library/3.6&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
 <pre class="r"><code>install.packages(&quot;tidyverse&quot;)</code></pre>
-<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+<pre><code>## Installing package into &#39;C:/Users/Utilizador/Documents/R/win-library/3.6&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
 <pre class="r"><code>install.packages(&quot;dplyr&quot;)</code></pre>
-<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+<pre><code>## Installing package into &#39;C:/Users/Utilizador/Documents/R/win-library/3.6&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
 <pre class="r"><code>install.packages(&quot;here&quot;)</code></pre>
-<pre><code>## Installing package into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+<pre><code>## Installing package into &#39;C:/Users/Utilizador/Documents/R/win-library/3.6&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
 <pre class="r"><code>install.packages(c(&quot;tidyr&quot;, &quot;devtools&quot;))</code></pre>
-<pre><code>## Installing packages into &#39;C:/Users/Margarida/Documents/R/win-library/3.5&#39;
+<pre><code>## Installing packages into &#39;C:/Users/Utilizador/Documents/R/win-library/3.6&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
 <pre class="r"><code>library(data.table)
@@ -415,27 +414,22 @@ library(rmarkdown)
 library(tidyr)
 library(devtools)</code></pre>
 <pre><code>## Loading required package: usethis</code></pre>
-<pre><code>## Error: package or namespace load failed for &#39;usethis&#39; in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
-##  there is no package called &#39;fs&#39;</code></pre>
-<pre><code>## Error: package &#39;usethis&#39; could not be loaded</code></pre>
 <pre class="r"><code>library(ggplot2)
 library(tidyverse)</code></pre>
-<pre><code>## Error: package or namespace load failed for &#39;tidyverse&#39; in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
-##  there is no package called &#39;fs&#39;</code></pre>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:data.table&#39;:
-## 
-##     between, first, last</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(here)</code></pre>
-<pre><code>## here() starts at C:/Users/Margarida/Desktop/ID05/ID05</code></pre>
+<pre><code>## -- Attaching packages -------------------------------------------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v tibble  2.1.3     v dplyr   0.8.3
+## v readr   1.3.1     v stringr 1.4.0
+## v purrr   0.3.3     v forcats 0.4.0</code></pre>
+<pre><code>## -- Conflicts ----------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::between()   masks data.table::between()
+## x dplyr::filter()    masks stats::filter()
+## x dplyr::first()     masks data.table::first()
+## x dplyr::lag()       masks stats::lag()
+## x dplyr::last()      masks data.table::last()
+## x purrr::transpose() masks data.table::transpose()</code></pre>
+<pre class="r"><code>library(dplyr)
+library(here)</code></pre>
+<pre><code>## here() starts at C:/Users/Utilizador/Documents/GitHub/ID05</code></pre>
 <pre class="r"><code>novopop&lt;-dadospopulacao[,-c(3,5)]
 names(novopop)</code></pre>
 <pre><code>##  [1] &quot;Country&quot;  &quot;Sex&quot;      &quot;ageGroup&quot; &quot;X2000&quot;    &quot;X2001&quot;    &quot;X2002&quot;   
@@ -445,20 +439,30 @@ names(novopop)</code></pre>
 <pre class="r"><code>POP&lt;-gather(novopop,&quot;Year&quot;,&quot;pop&quot;,4:22)
 POP$Year&lt;-sub(&quot;.&quot;, &quot;&quot;, POP$Year)  #Tirar o primeiro caracter (X) dos anos
 POP &lt;- na.omit(POP)</code></pre>
+<pre class="r"><code>totoid&lt;- aggregate(POP$pop, by=list(POP$Year, POP$Country, POP$Sex), FUN=sum)
+#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
+setnames(totoid, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Year&quot;, &quot;Country&quot;, &quot;Sex&quot;,&quot;pop&quot;))
+names(totoid)</code></pre>
+<pre><code>## [1] &quot;Year&quot;    &quot;Country&quot; &quot;Sex&quot;     &quot;pop&quot;</code></pre>
+<pre class="r"><code>names(POP)</code></pre>
+<pre><code>## [1] &quot;Country&quot;  &quot;Sex&quot;      &quot;ageGroup&quot; &quot;Year&quot;     &quot;pop&quot;</code></pre>
+<pre class="r"><code>totoid&lt;- totoid[-c(1063:1593),]
+ageGroup&lt;-rep(&quot;All&quot;, times = 1062)
+totoid&lt;-cbind(totoid,ageGroup)
+
+POP&lt;- rbind(POP, totoid)</code></pre>
 <pre class="r"><code>#Cancros
 names(dadoscancro)</code></pre>
-<pre><code>##  [1] &quot;Country&quot;      &quot;Cause&quot;        &quot;CancerSite&quot;   &quot;ageStart&quot;    
-##  [5] &quot;ageGroup&quot;     &quot;ageLabel&quot;     &quot;Females_2011&quot; &quot;Females_2012&quot;
-##  [9] &quot;Females_2013&quot; &quot;Females_2014&quot; &quot;Females_2015&quot; &quot;Females_2016&quot;
-## [13] &quot;Females_2017&quot; &quot;Males_2011&quot;   &quot;Males_2012&quot;   &quot;Males_2013&quot;  
-## [17] &quot;Males_2014&quot;   &quot;Males_2015&quot;   &quot;Males_2016&quot;   &quot;Males_2017&quot;</code></pre>
+<pre><code>##  [1] &quot;Country&quot;      &quot;Cause&quot;        &quot;CancerSite&quot;   &quot;ageStart&quot;     &quot;ageGroup&quot;    
+##  [6] &quot;ageLabel&quot;     &quot;Females_2011&quot; &quot;Females_2012&quot; &quot;Females_2013&quot; &quot;Females_2014&quot;
+## [11] &quot;Females_2015&quot; &quot;Females_2016&quot; &quot;Females_2017&quot; &quot;Males_2011&quot;   &quot;Males_2012&quot;  
+## [16] &quot;Males_2013&quot;   &quot;Males_2014&quot;   &quot;Males_2015&quot;   &quot;Males_2016&quot;   &quot;Males_2017&quot;</code></pre>
 <pre class="r"><code>novocancro&lt;-dadoscancro[,-c(2,4,6)]
 names(novocancro)</code></pre>
-<pre><code>##  [1] &quot;Country&quot;      &quot;CancerSite&quot;   &quot;ageGroup&quot;     &quot;Females_2011&quot;
-##  [5] &quot;Females_2012&quot; &quot;Females_2013&quot; &quot;Females_2014&quot; &quot;Females_2015&quot;
-##  [9] &quot;Females_2016&quot; &quot;Females_2017&quot; &quot;Males_2011&quot;   &quot;Males_2012&quot;  
-## [13] &quot;Males_2013&quot;   &quot;Males_2014&quot;   &quot;Males_2015&quot;   &quot;Males_2016&quot;  
-## [17] &quot;Males_2017&quot;</code></pre>
+<pre><code>##  [1] &quot;Country&quot;      &quot;CancerSite&quot;   &quot;ageGroup&quot;     &quot;Females_2011&quot; &quot;Females_2012&quot;
+##  [6] &quot;Females_2013&quot; &quot;Females_2014&quot; &quot;Females_2015&quot; &quot;Females_2016&quot; &quot;Females_2017&quot;
+## [11] &quot;Males_2011&quot;   &quot;Males_2012&quot;   &quot;Males_2013&quot;   &quot;Males_2014&quot;   &quot;Males_2015&quot;  
+## [16] &quot;Males_2016&quot;   &quot;Males_2017&quot;</code></pre>
 <pre class="r"><code>CANCRO&lt;-gather(novocancro,&quot;Year&quot;,&quot;cancer&quot;,4:17)
 Sex&lt;- rep(c(&quot;Females&quot;, &quot;Males&quot;), times = c(63504,63504))
 CANCRO&lt;-cbind(CANCRO,Sex)
@@ -467,440 +471,120 @@ CANCRO$Year&lt;-sub(&quot;Females&quot;, &quot;&quot;, CANCRO$Year) #Tirar a pal
 CANCRO$Year&lt;-sub(&quot;Males&quot;, &quot;&quot;, CANCRO$Year) #Tirar a palavra Males dos anos
 CANCRO$Year&lt;-sub(&quot;.&quot;, &quot;&quot;, CANCRO$Year) #Tirar o underscore dos anos
 
-CANCRO &lt;- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
-str(CANCRO)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    102820 obs. of  6 variables:
-##  $ Country   : Factor w/ 28 levels &quot;Austria&quot;,&quot;Belgium&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ CancerSite: Factor w/ 18 levels &quot;All Cancers&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
-##  $ ageGroup  : Factor w/ 18 levels &quot;1-4&quot;,&quot;10-14&quot;,..: 1 10 2 3 4 5 6 7 8 9 ...
-##  $ Year      : chr  &quot;2011&quot; &quot;2011&quot; &quot;2011&quot; &quot;2011&quot; ...
-##  $ cancer    : int  0 0 0 0 0 0 0 1 1 2 ...
-##  $ Sex       : Factor w/ 2 levels &quot;Females&quot;,&quot;Males&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-##  - attr(*, &quot;na.action&quot;)= &#39;omit&#39; Named int  235 236 237 238 239 240 241 242 243 244 ...
-##   ..- attr(*, &quot;names&quot;)= chr  &quot;235&quot; &quot;236&quot; &quot;237&quot; &quot;238&quot; ...</code></pre>
-<pre class="r"><code>total&lt;-merge(POP,CANCRO, by=c(&quot;Country&quot;, &quot;Sex&quot;, &quot;Year&quot;, &quot;ageGroup&quot;))
-#Junção do CANCRO e POP para termos as duas dataframes cruzadas
+CANCRO &lt;- na.omit(CANCRO) 
 
-tot&lt;- aggregate(total$cancer, by=list(total$Year, total$Country, total$Sex), FUN=sum)
+CANCRO&lt;- CANCRO[CANCRO$CancerSite==&quot;Bladder&quot;,]
+View(CANCRO)</code></pre>
+<pre class="r"><code>mortes&lt;- aggregate(CANCRO$cancer, by=list(CANCRO$Year, CANCRO$Country, CANCRO$Sex, CANCRO$CancerSite), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
-setnames(tot, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Ano&quot;, &quot;Pais&quot;, &quot;Sexo&quot;,&quot;Mortes&quot;))
-names(tot)</code></pre>
-<pre><code>## [1] &quot;Ano&quot;    &quot;Pais&quot;   &quot;Sexo&quot;   &quot;Mortes&quot;</code></pre>
-<pre class="r"><code>#Falta adicionar a coluna com o total da populacao de cada pais em cada ano respectivamente
+setnames(mortes, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;Group.4&quot;,&quot;x&quot;), new = c(&quot;Year&quot;, &quot;Country&quot;, &quot;Sex&quot;,&quot;CancerSite&quot;,&quot;cancer&quot;))
+names(mortes)</code></pre>
+<pre><code>## [1] &quot;Year&quot;       &quot;Country&quot;    &quot;Sex&quot;        &quot;CancerSite&quot; &quot;cancer&quot;</code></pre>
+<pre class="r"><code>names(CANCRO)</code></pre>
+<pre><code>## [1] &quot;Country&quot;    &quot;CancerSite&quot; &quot;ageGroup&quot;   &quot;Year&quot;       &quot;cancer&quot;    
+## [6] &quot;Sex&quot;</code></pre>
+<pre class="r"><code>ageGroup&lt;-rep(&quot;All&quot;, times = 374)
+mortes&lt;-cbind(mortes,ageGroup)
 
-
-totpop&lt;- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
-#Dataframe do nr de população relativa por Ano, País e Sexo
-
-
-populacaototal_FEM&lt;-totpop[totpop$Group.1==&quot;Females&quot;,] #desnidade populacional do sexo feminino
-
-populacaototal_MASC&lt;-totpop[totpop$Group.1==&quot;Males&quot;,] #densidade populacional do sexo masculino
-
-setnames(populacaototal_FEM, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Sexo&quot;,&quot;Pais&quot;,&quot;Ano&quot;, &quot;DensidadePop&quot; ))
-
-populacaototal&lt;- merge(populacaototal_FEM,populacaototal_MASC, by=c(&quot;Ano&quot;, &quot;Pais&quot;)) #dataframe com a população por sexo
-View(populacaototal)
-
-populacaototal_sexos&lt;-rbind(populacaototal_FEM,populacaototal_MASC) 
-#Junção dos sexos e da densidade populacional numa só coluna, cada variável
-
-final&lt;- merge(tot,populacaototal_sexos, by=c(&quot;Ano&quot;, &quot;Pais&quot;,&quot;Sexo&quot;)) #Dataframe com a população total e o nr de mortes</code></pre>
-<pre class="r"><code>#Apenas queriamos a densidade populacional sem descriminar os sexos
-densidadetotal&lt;- aggregate(POP$pop, by=list(POP$Sex, POP$Country, POP$Year), FUN=sum)
-populacaototal&lt;-densidadetotal[densidadetotal$Group.1==&quot;Total&quot;,]
-
-novopoptotal&lt;-populacaototal[,-1]
-setnames(novopoptotal, old = c(&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Pais&quot;,&quot;Ano&quot;, &quot;DensidadePop&quot; ))
-
-final2&lt;-merge(tot,novopoptotal, by=c(&quot;Ano&quot;, &quot;Pais&quot;))
-names(final2)</code></pre>
-<pre><code>## [1] &quot;Ano&quot;          &quot;Pais&quot;         &quot;Sexo&quot;         &quot;Mortes&quot;      
-## [5] &quot;DensidadePop&quot;</code></pre>
-<pre class="r"><code>mRate &lt;- 100000*(final$Mortes/final$DensidadePop)
+CANCRO&lt;- rbind(CANCRO, mortes)</code></pre>
+<pre class="r"><code>total&lt;-merge(POP,CANCRO, by=c(&quot;Country&quot;, &quot;Sex&quot;, &quot;Year&quot;, &quot;ageGroup&quot;))
+#Junção do CANCRO e POP para termos as duas dataframes cruzadas</code></pre>
+<pre class="r"><code>mRate &lt;- 100000*(total$cancer/total$pop)
 mRate&lt;-round(mRate,3)
-final3&lt;-cbind(final,mRate)
 
+TabelaFinal&lt;- cbind(total,mRate)
+View(TabelaFinal)
+attach(TabelaFinal)</code></pre>
+<pre><code>## The following objects are masked _by_ .GlobalEnv:
+## 
+##     ageGroup, mRate, Sex</code></pre>
+<pre class="r"><code>Paises_mulheres_selecionados&lt;- TabelaFinal[TabelaFinal$Country %in% c(&quot;Belgium&quot;, &quot;Finland&quot;, &quot;Italy&quot;, &quot;Netherlands&quot;, &quot;Portugal&quot;) &amp; TabelaFinal$Sex==&quot;Females&quot; &amp; TabelaFinal$ageGroup==&quot;All&quot;,]
+View(Paises_mulheres_selecionados)
+Paises_mulheres_selecionados&lt;-Paises_mulheres_selecionados[,-c(2,3,4,6,8)]
 
-MRATE &lt;- final3[,-c(1:5)]
+#Analise Classificatória População
 
-TabelaFinal&lt;- cbind(final,MRATE)
-TabelaFinal</code></pre>
-<pre><code>##      Ano           Pais    Sexo Mortes DensidadePop   MRATE
-## 1   2011        Austria Females  16490      4296293 383.819
-## 2   2011        Austria   Males  18683      4078871 458.043
-## 3   2011        Belgium Females  21817      5598920 389.664
-## 4   2011        Belgium   Males  27716      5401718 513.096
-## 5   2011       Bulgaria Females  12937      3780505 342.203
-## 6   2011       Bulgaria   Males  18344      3588926 511.128
-## 7   2011        Croatia Females  10369      2221105 466.840
-## 8   2011        Croatia   Males  14543      2068751 702.985
-## 9   2011         Cyprus Females    843       430993 195.595
-## 10  2011         Cyprus   Males   1141       408758 279.138
-## 11  2011        Czechia Females  21570      5339500 403.970
-## 12  2011        Czechia   Males  27368      5147231 531.703
-## 13  2011        Denmark Females  13311      2804046 474.707
-## 14  2011        Denmark   Males  14601      2756582 529.678
-## 15  2011        Estonia Females   3044       709960 428.757
-## 16  2011        Estonia   Males   3529       619700 569.469
-## 17  2011        Finland Females   9675      2736860 353.507
-## 18  2011        Finland   Males  10870      2638416 411.990
-## 19  2011         France Females 114069     33515819 340.344
-## 20  2011         France   Males 161028     31462902 511.803
-## 21  2011        Germany Females 181139     41097465 440.755
-## 22  2011        Germany   Males 215445     39124600 550.664
-## 23  2011         Greece Females  18619      5669948 328.380
-## 24  2011         Greece   Males  30233      5453444 554.384
-## 25  2011        Hungary Females  26967      5241821 514.459
-## 26  2011        Hungary   Males  33586      4743901 707.983
-## 27  2011        Ireland Females   7342      2301455 319.016
-## 28  2011        Ireland   Males   8314      2269426 366.348
-## 29  2011          Italy Females 127920     30649434 417.365
-## 30  2011          Italy   Males 169024     28715256 588.621
-## 31  2011         Latvia Females   4995      1126666 443.343
-## 32  2011         Latvia   Males   5829       947939 614.913
-## 33  2011      Lithuania Females   6431      1645365 390.856
-## 34  2011      Lithuania   Males   8313      1407223 590.738
-## 35  2011     Luxembourg Females    862       257221 335.120
-## 36  2011     Luxembourg   Males   1026       254619 402.955
-## 37  2011          Malta Females    714       208584 342.308
-## 38  2011          Malta   Males    865       206405 419.079
-## 39  2011    Netherlands Females  35472      8412317 421.667
-## 40  2011    Netherlands   Males  41252      8243482 500.420
-## 41  2011         Poland Females  71741     19633018 365.410
-## 42  2011         Poland   Males  94173     18429700 510.985
-## 43  2011       Portugal Females  18461      5519178 334.488
-## 44  2011       Portugal   Males  27822      5053543 550.544
-## 45  2011        Romania Females  35455     10366110 342.028
-## 46  2011        Romania   Males  52856      9832949 537.540
-## 47  2011       Slovakia Females   9666      2767273 349.297
-## 48  2011       Slovakia   Males  13830      2625173 526.822
-## 49  2011       Slovenia Females   4623      1035626 446.397
-## 50  2011       Slovenia   Males   5918      1014563 583.305
-## 51  2011          Spain Females  71607     23617694 303.192
-## 52  2011          Spain   Males 119153     23049480 516.944
-## 53  2011         Sweden Females  18066      4725326 382.323
-## 54  2011         Sweden   Males  20330      4690244 433.453
-## 55  2011 United Kingdom Females 133625     32071042 416.653
-## 56  2011 United Kingdom   Males 148435     30951490 479.573
-## 57  2012        Austria Females  16870      4309977 391.417
-## 58  2012        Austria   Males  18944      4098144 462.258
-## 59  2012        Belgium Females  21265      5635601 377.333
-## 60  2012        Belgium   Males  27458      5440288 504.716
-## 61  2012       Bulgaria Females  13801      3760457 367.003
-## 62  2012       Bulgaria   Males  19749      3566767 553.695
-## 63  2012        Croatia Females  10445      2213675 471.840
-## 64  2012        Croatia   Males  14629      2062309 709.351
-## 65  2012         Cyprus Females    859       443018 193.897
-## 66  2012         Cyprus   Males   1306       418993 311.700
-## 67  2012        Czechia Females  21941      5347235 410.324
-## 68  2012        Czechia   Males  27389      5158210 530.979
-## 69  2012        Denmark Females  13575      2813740 482.454
-## 70  2012        Denmark   Males  14702      2766776 531.377
-## 71  2012        Estonia Females   2986       707079 422.301
-## 72  2012        Estonia   Males   3647       618138 589.998
-## 73  2012        Finland Females   9753      2748733 354.818
-## 74  2012        Finland   Males  11091      2652534 418.128
-## 75  2012         France Females 116329     33671600 345.481
-## 76  2012         France   Males 161355     31605383 510.530
-## 77  2012        Germany Females 180868     41097953 440.090
-## 78  2012        Germany   Males 215913     39229947 550.378
-## 79  2012         Greece Females  19056      5662522 336.528
-## 80  2012         Greece   Males  31343      5423884 577.870
-## 81  2012        Hungary Females  27432      5207259 526.803
-## 82  2012        Hungary   Males  34226      4724666 724.411
-## 83  2012        Ireland Females   7208      2315288 311.322
-## 84  2012        Ireland   Males   8179      2273999 359.675
-## 85  2012          Italy Females 128604     30667608 419.348
-## 86  2012          Italy   Males 169606     28726599 590.414
-## 87  2012         Latvia Females   5047      1110001 454.684
-## 88  2012         Latvia   Males   5960       934812 637.561
-## 89  2012      Lithuania Females   6325      1620130 390.401
-## 90  2012      Lithuania   Males   8250      1383511 596.309
-## 91  2012     Luxembourg Females    894       263033 339.881
-## 92  2012     Luxembourg   Males   1033       261820 394.546
-## 93  2012          Malta Females    774       209851 368.833
-## 94  2012          Malta   Males    882       207695 424.661
-## 95  2012    Netherlands Females  35492      8447477 420.149
-## 96  2012    Netherlands   Males  42060      8282871 507.795
-## 97  2012         Poland Females  74289     19636496 378.321
-## 98  2012         Poland   Males  96527     18427296 523.826
-## 99  2012       Portugal Females  18435      5511961 334.454
-## 100 2012       Portugal   Males  27998      5030437 556.572
-## 101 2012        Romania Females  36015     10318889 349.020
-## 102 2012        Romania   Males  53729      9777107 549.539
-## 103 2012       Slovakia Females   9987      2772570 360.207
-## 104 2012       Slovakia   Males  13504      2631752 513.118
-## 105 2012       Slovenia Females   4548      1038765 437.828
-## 106 2012       Slovenia   Males   5977      1016731 587.864
-## 107 2012          Spain Females  71867     23719207 302.991
-## 108 2012          Spain   Males 121406     23099012 525.590
-## 109 2012         Sweden Females  18444      4756021 387.803
-## 110 2012         Sweden   Males  20374      4726834 431.028
-## 111 2012 United Kingdom Females 136146     32288847 421.650
-## 112 2012 United Kingdom   Males 150724     31206241 482.993
-## 113 2013        Austria Females  16340      4328238 377.521
-## 114 2013        Austria   Males  19167      4123622 464.810
-## 115 2013        Belgium Females  21588      5665118 381.069
-## 116 2013        Belgium   Males  27477      5472856 502.060
-## 117 2013       Bulgaria Females  13297      3739479 355.584
-## 118 2013       Bulgaria   Males  20205      3545073 569.946
-## 119 2013        Croatia Females  10614      2205657 481.217
-## 120 2013        Croatia   Males  14514      2056483 705.768
-## 121 2013         Cyprus Females    883       444842 198.497
-## 122 2013         Cyprus   Males   1296       421036 307.812
-## 123 2013        Czechia Females  21494      5351776 401.624
-## 124 2013        Czechia   Males  27420      5164349 530.948
-## 125 2013        Denmark Females  13026      2823776 461.297
-## 126 2013        Denmark   Males  14439      2778852 519.603
-## 127 2013        Estonia Females   3027       704007 429.967
-## 128 2013        Estonia   Males   3645       616167 591.560
-## 129 2013        Finland Females   9811      2760052 355.464
-## 130 2013        Finland   Males  11241      2666622 421.545
-## 131 2013         France Females 115701     33827685 342.030
-## 132 2013         France   Males 160693     31772665 505.759
-## 133 2013        Germany Females 181823     41142770 441.932
-## 134 2013        Germany   Males 218369     39380976 554.504
-## 135 2013         Greece Females  19891      5637364 352.842
-## 136 2013         Greece   Males  31691      5366251 590.561
-## 137 2013        Hungary Females  27490      5192845 529.382
-## 138 2013        Hungary   Males  33365      4715953 707.492
-## 139 2013        Ireland Females   7405      2326317 318.314
-## 140 2013        Ireland   Males   8278      2283462 362.520
-## 141 2013          Italy Females 128694     30795630 417.897
-## 142 2013          Italy   Males 167502     28889597 579.800
-## 143 2013         Latvia Females   4990      1097245 454.775
-## 144 2013         Latvia   Males   5897       926580 636.426
-## 145 2013      Lithuania Females   6260      1603014 390.514
-## 146 2013      Lithuania   Males   7991      1368891 583.757
-## 147 2013     Luxembourg Females    846       268627 314.935
-## 148 2013     Luxembourg   Males    985       268412 366.973
-## 149 2013          Malta Females    701       212126 330.464
-## 150 2013          Malta   Males    836       210383 397.371
-## 151 2013    Netherlands Females  34617      8472236 408.593
-## 152 2013    Netherlands   Males  40747      8307339 490.494
-## 153 2013         Poland Females  74809     19636442 380.970
-## 154 2013         Poland   Males  95951     18426093 520.734
-## 155 2013       Portugal Females  18471      5491592 336.351
-## 156 2013       Portugal   Males  28204      4995697 564.566
-## 157 2013        Romania Females  36749     10258594 358.226
-## 158 2013        Romania   Males  54136      9761480 554.588
-## 159 2013       Slovakia Females  10073      2774857 363.010
-## 160 2013       Slovakia   Males  14174      2635979 537.713
-## 161 2013       Slovenia Females   4727      1039760 454.624
-## 162 2013       Slovenia   Males   6094      1019061 598.001
-## 163 2013          Spain Females  73519     23710130 310.074
-## 164 2013          Spain   Males 120330     23017760 522.770
-## 165 2013         Sweden Females  18706      4789988 390.523
-## 166 2013         Sweden   Males  20351      4765905 427.012
-## 167 2013 United Kingdom Females 134876     32481221 415.243
-## 168 2013 United Kingdom   Males 150508     31424121 478.957
-## 169 2014        Austria Females  16944      4352447 389.298
-## 170 2014        Austria   Males  19334      4155339 465.281
-## 171 2014        Belgium Females  21480      5687048 377.700
-## 172 2014        Belgium   Males  27199      5493792 495.086
-## 173 2014       Bulgaria Females  13710      3720732 368.476
-## 174 2014       Bulgaria   Males  19461      3524945 552.094
-## 175 2014        Croatia Females  10939      2197061 497.892
-## 176 2014        Croatia   Males  14615      2049748 713.014
-## 177 2014         Cyprus Females    849       440462 192.752
-## 178 2014         Cyprus   Males   1350       417538 323.324
-## 179 2014        Czechia Females  21387      5350039 399.754
-## 180 2014        Czechia   Males  27163      5162380 526.172
-## 181 2014        Denmark Females  13255      2834956 467.556
-## 182 2014        Denmark   Males  14703      2792279 526.559
-## 183 2014        Estonia Females   3190       700900 455.129
-## 184 2014        Estonia   Males   3728       614919 606.259
-## 185 2014        Finland Females   9822      2770906 354.469
-## 186 2014        Finland   Males  11265      2680364 420.279
-## 187 2014         France Females 119235     34120851 349.449
-## 188 2014         France   Males 163483     32045129 510.165
-## 189 2014        Germany Females 181557     41210540 440.560
-## 190 2014        Germany   Males 218618     39556923 552.667
-## 191 2014         Greece Females  19832      5613568 353.287
-## 192 2014         Greece   Males  32335      5313239 608.574
-## 193 2014        Hungary Females  27692      5173974 535.217
-## 194 2014        Hungary   Males  33287      4703391 707.723
-## 195 2014        Ireland Females   7852      2342002 335.269
-## 196 2014        Ireland   Males   8505      2295850 370.451
-## 197 2014          Italy Females 129345     31298104 413.268
-## 198 2014          Italy   Males 168052     29484564 569.966
-## 199 2014         Latvia Females   4905      1084423 452.314
-## 200 2014         Latvia   Males   5984       917045 652.531
-## 201 2014      Lithuania Females   6236      1587477 392.825
-## 202 2014      Lithuania   Males   8336      1355995 614.752
-## 203 2014     Luxembourg Females    848       274563 308.854
-## 204 2014     Luxembourg   Males   1173       275117 426.364
-## 205 2014          Malta Females    705       214891 328.073
-## 206 2014          Malta   Males    956       214533 445.619
-## 207 2014    Netherlands Females  35184      8494904 414.178
-## 208 2014    Netherlands   Males  41180      8334385 494.098
-## 209 2014         Poland Females  76782     19613892 391.467
-## 210 2014         Poland   Males  96889     18403964 526.457
-## 211 2014       Portugal Females  18610      5469281 340.264
-## 212 2014       Portugal   Males  28518      4958020 575.189
-## 213 2014        Romania Females  37081     10201259 363.494
-## 214 2014        Romania   Males  55541      9746052 569.882
-## 215 2014       Slovakia Females  10480      2776889 377.401
-## 216 2014       Slovakia   Males  13907      2639060 526.968
-## 217 2014       Slovenia Females   4604      1040211 442.603
-## 218 2014       Slovenia   Males   5987      1020874 586.458
-## 219 2014          Spain Females  72696     23634738 307.581
-## 220 2014          Spain   Males 119071     22877461 520.473
-## 221 2014         Sweden Females  18598      4830507 385.011
-## 222 2014         Sweden   Males  20669      4814357 429.320
-## 223 2014 United Kingdom Females 136374     32687816 417.201
-## 224 2014 United Kingdom   Males 153286     31663387 484.111
-## 225 2015        Austria Females  16692      4384529 380.702
-## 226 2015        Austria   Males  19548      4200397 465.385
-## 227 2015        Belgium Females  21434      5713206 375.166
-## 228 2015        Belgium   Males  27209      5524068 492.554
-## 229 2015       Bulgaria Females  13756      3700183 371.765
-## 230 2015       Bulgaria   Males  19279      3502015 550.512
-## 231 2015        Croatia Females  10778      2186089 493.027
-## 232 2015        Croatia   Males  14799      2039227 725.716
-## 233 2015         Cyprus Females    971       435183 223.125
-## 234 2015         Cyprus   Males   1361       411825 330.480
-## 235 2015        Czechia Females  21331      5361348 397.866
-## 236 2015        Czechia   Males  26963      5176927 520.830
-## 237 2015        Denmark Females  13086      2848701 459.367
-## 238 2015        Denmark   Males  14589      2811014 518.994
-## 239 2015        Estonia Females   3150       700166 449.893
-## 240 2015        Estonia   Males   3808       614704 619.485
-## 241 2015        Finland Females   9978      2779890 358.935
-## 242 2015        Finland   Males  11539      2691863 428.662
-## 243 2015         France Females 121773     34283895 355.190
-## 244 2015         France   Males 165058     32174258 513.013
-## 245 2015        Germany Females 184078     41362080 445.040
-## 246 2015        Germany   Males 220202     39835457 552.779
-## 247 2015         Greece Females  20382      5589628 364.640
-## 248 2015         Greece   Males  33029      5268390 626.928
-## 249 2015        Hungary Females  27957      5159792 541.824
-## 250 2015        Hungary   Males  33005      4695779 702.865
-## 251 2015        Ireland Females   7484      2364285 316.544
-## 252 2015        Ireland   Males   8582      2313342 370.978
-## 253 2015          Italy Females 131809     31294022 421.195
-## 254 2015          Italy   Males 167914     29501590 569.169
-## 255 2015         Latvia Females   5119      1074889 476.235
-## 256 2015         Latvia   Males   5625       911207 617.313
-## 257 2015      Lithuania Females   6582      1575005 417.903
-## 258 2015      Lithuania   Males   8538      1346257 634.203
-## 259 2015     Luxembourg Females    911       280986 324.215
-## 260 2015     Luxembourg   Males    966       281972 342.587
-## 261 2015          Malta Females    743       219203 338.955
-## 262 2015          Malta   Males    927       220488 420.431
-## 263 2015    Netherlands Females  36034      8527868 422.544
-## 264 2015    Netherlands   Males  42483      8372858 507.389
-## 265 2015         Poland Females  80076     19608451 408.375
-## 266 2015         Poland   Males 101800     18397163 553.346
-## 267 2015       Portugal Females  18859      5451156 345.963
-## 268 2015       Portugal   Males  28894      4923666 586.839
-## 269 2015        Romania Females  37945     10163573 373.343
-## 270 2015        Romania   Males  55914      9707074 576.013
-## 271 2015       Slovakia Females  10626      2779021 382.365
-## 272 2015       Slovakia   Males  14000      2642328 529.836
-## 273 2015       Slovenia Females   4837      1040645 464.808
-## 274 2015       Slovenia   Males   6348      1022229 620.996
-## 275 2015          Spain Females  73788     23623019 312.356
-## 276 2015          Spain   Males 119487     22826546 523.456
-## 277 2015         Sweden Females  18562      4875115 380.750
-## 278 2015         Sweden   Males  20804      4872240 426.990
-## 279 2015 United Kingdom Females 136446     32919294 414.486
-## 280 2015 United Kingdom   Males 154574     31934099 484.041
-## 281 2016        Austria Females  16894      4427918 381.534
-## 282 2016        Austria   Males  19552      4272553 457.619
-## 283 2016        Belgium Females  21311      5741853 371.152
-## 284 2016        Belgium   Males  27294      5569264 490.083
-## 285 2016       Bulgaria Females  13219      3676607 359.543
-## 286 2016       Bulgaria   Males  18526      3477177 532.789
-## 287 2016        Croatia Females  10734      2167872 495.140
-## 288 2016        Croatia   Males  14996      2022797 741.350
-## 289 2016         Cyprus Females    918       435627 210.731
-## 290 2016         Cyprus   Males   1338       412692 324.213
-## 291 2016        Czechia Females  21438      5367513 399.403
-## 292 2016        Czechia   Males  27356      5186330 527.464
-## 293 2016        Denmark Females  13581      2869364 473.310
-## 294 2016        Denmark   Males  14834      2837887 522.713
-## 295 2016        Estonia Females   3173       699236 453.781
-## 296 2016        Estonia   Males   3666       616708 594.447
-## 297 2016        Finland Females  10270      2785818 368.653
-## 298 2016        Finland   Males  11971      2701490 443.126
-## 299 2016         France Females 124552     34391005 362.164
-## 300 2016         France   Males 165676     32247386 513.766
-## 301 2016        Germany Females 187913     41661561 451.046
-## 302 2016        Germany   Males 223614     40514123 551.941
-## 303 2016         Greece Females  21179      5559538 380.949
-## 304 2016         Greece   Males  32641      5224210 624.803
-## 305 2016        Hungary Females  27706      5141966 538.821
-## 306 2016        Hungary   Males  33821      4688519 721.358
-## 307 2016        Ireland Females   7939      2387145 332.573
-## 308 2016        Ireland   Males   8601      2339141 367.699
-## 309 2016          Italy Females 132689     31209230 425.159
-## 310 2016          Italy   Males 170121     29456321 577.536
-## 311 2016         Latvia Females   4988      1064658 468.507
-## 312 2016         Latvia   Males   5842       904299 646.025
-## 313 2016      Lithuania Females   6504      1558951 417.204
-## 314 2016      Lithuania   Males   8295      1329607 623.869
-## 315 2016     Luxembourg Females    845       287056 294.368
-## 316 2016     Luxembourg   Males   1105       289193 382.098
-## 317 2016          Malta Females    776       224019 346.399
-## 318 2016          Malta   Males    920       226396 406.368
-## 319 2016    Netherlands Females  36893      8561985 430.893
-## 320 2016    Netherlands   Males  43547      8417135 517.361
-## 321 2016         Poland Females  80093     19590169 408.843
-## 322 2016         Poland   Males 101577     18377040 552.739
-## 323 2016       Portugal Females  19419      5439821 356.979
-## 324 2016       Portugal   Males  29515      4901509 602.161
-## 325 2016        Romania Females  38122     10110852 377.040
-## 326 2016        Romania   Males  56665      9649733 587.218
-## 327 2016       Slovakia Females  10667      2780170 383.682
-## 328 2016       Slovakia   Males  14097      2646082 532.750
-## 329 2016       Slovenia Females   4833      1040855 464.330
-## 330 2016       Slovenia   Males   6392      1023333 624.626
-## 331 2016          Spain Females  75084     23632635 317.713
-## 332 2016          Spain   Males 121105     22807464 530.988
-## 333 2016         Sweden Females  18636      4920051 378.777
-## 334 2016         Sweden   Males  20969      4930966 425.251
-## 335 2016 United Kingdom Females 138959     33152984 419.145
-## 336 2016 United Kingdom   Males 157185     32226060 487.757
-## 337 2017        Austria Females  16678      4460424 373.911
-## 338 2017        Austria   Males  19875      4312441 460.876
-## 339 2017       Bulgaria Females  13341      3651881 365.319
-## 340 2017       Bulgaria   Males  18713      3449978 542.409
-## 341 2017        Croatia Females  10556      2149003 491.205
-## 342 2017        Croatia   Males  14472      2005210 721.720
-## 343 2017         Cyprus Females   1019       438139 232.575
-## 344 2017         Cyprus   Males   1457       416663 349.683
-## 345 2017        Czechia Females  21388      5378133 397.684
-## 346 2017        Czechia   Males  27606      5200687 530.814
-## 347 2017        Estonia Females   3203       698097 458.819
-## 348 2017        Estonia   Males   3720       617538 602.392
-## 349 2017        Finland Females  10281      2790970 368.367
-## 350 2017        Finland   Males  12029      2712327 443.494
-## 351 2017        Germany Females 185745     41824535 444.105
-## 352 2017        Germany   Males 219363     40697118 539.014
-## 353 2017         Greece Females  20491      5546916 369.412
-## 354 2017         Greece   Males  32939      5221277 630.861
-## 355 2017        Hungary Females  27985      5122270 546.340
-## 356 2017        Hungary   Males  33212      4675291 710.373
-## 357 2017        Ireland Females   7786      2416465 322.206
-## 358 2017        Ireland   Males   8726      2367918 368.509
-## 359 2017      Lithuania Females   6411      1535718 417.459
-## 360 2017      Lithuania   Males   8039      1312186 612.642
-## 361 2017     Luxembourg Females    948       294026 322.420
-## 362 2017     Luxembourg   Males   1011       296641 340.816
-## 363 2017    Netherlands Females  36205      8606405 420.675
-## 364 2017    Netherlands   Males  43542      8475102 513.764
-## 365 2017         Poland Females  81074     19595127 413.746
-## 366 2017         Poland   Males 100332     18377837 545.940
-## 367 2017        Romania Females  38546     10041772 383.857
-## 368 2017        Romania   Males  56370      9602578 587.030
-## 369 2017       Slovakia Females  10750      2783659 386.182
-## 370 2017       Slovakia   Males  14076      2651684 530.832
-## 371 2017       Slovenia Females   4934      1040770 474.072
-## 372 2017       Slovenia   Males   6447      1025125 628.899
-## 373 2017          Spain Females  75923     23693426 320.439
-## 374 2017          Spain   Males 120615     22834598 528.212</code></pre>
+summary_pop&lt;-Paises_mulheres_selecionados%&gt;%
+group_by(Country)%&gt;% 
+summarise(Mean=mean(pop), Max=max(pop), Min=min(pop), Median=median(pop), Std=sd(pop))
+View(summary_pop)
+
+#Analise Classificatória Nº de cancros
+
+summary_cancro&lt;-Paises_mulheres_selecionados%&gt;%
+group_by(Country)%&gt;% 
+summarise(Mean=mean(cancer), Max=max(cancer), Min=min(cancer), Median=median(cancer), Std=sd(cancer))
+View(summary_cancro)</code></pre>
+<pre class="r"><code>#DATA FRAME COM AS PERCENTAGENS 
+
+Paises&lt;- TabelaFinal[TabelaFinal$Country %in% c(&quot;Belgium&quot;, &quot;Finland&quot;, &quot;Italy&quot;, &quot;Netherlands&quot;, &quot;Portugal&quot;),]
+
+Paises_mulheres&lt;- Paises[Paises$Country %in% c(&quot;Belgium&quot;, &quot;Finland&quot;, &quot;Italy&quot;, &quot;Netherlands&quot;, &quot;Portugal&quot;) &amp; Paises$Sex == &quot;Females&quot; &amp; Paises$ageGroup == &quot;All&quot;,] 
+
+Paises_homens&lt;- Paises[Paises$Country %in% c(&quot;Belgium&quot;, &quot;Finland&quot;, &quot;Italy&quot;, &quot;Netherlands&quot;, &quot;Portugal&quot;) &amp; Paises$Sex == &quot;Males&quot; &amp; Paises$ageGroup == &quot;All&quot;,]
+
+Pop_ambos_sexos&lt;- aggregate(Paises$pop, by=list(Paises$Year, Paises$ageGroup, Paises$Country), FUN=sum) #somar a população do sexo feminino e masculino por classe etária, ano e país
+
+All_idades&lt;-Pop_ambos_sexos[Pop_ambos_sexos$Group.2 == &quot;All&quot;,] #selecionar apenas a classe etária com todas as idades
+setnames(All_idades, old = c(&quot;Group.1&quot;,&quot;Group.2&quot;,&quot;Group.3&quot;,&quot;x&quot;), new = c(&quot;Year&quot;, &quot;ageGroup&quot;, &quot;Country&quot;,&quot;pop&quot;))
+
+Percentagem_mulheres&lt;-(Paises_mulheres$cancer/All_idades$pop)*100
+
+Percentagem_homens&lt;-(Paises_homens$cancer/All_idades$pop)*100
+
+Tabela_Questao3&lt;-cbind(All_idades,Percentagem_mulheres,Percentagem_homens)
+
+#SEXO FEMININO
+
+Perc_mulheres_2011&lt;-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2011]
+
+Sub_perc_mulheres_2012&lt;-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2012]-Perc_mulheres_2011
+
+Sub_perc_mulheres_2013&lt;-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2013]-Perc_mulheres_2011
+
+Sub_perc_mulheres_2014&lt;-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2014]-Perc_mulheres_2011
+
+Sub_perc_mulheres_2015&lt;-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2015]-Perc_mulheres_2011
+
+Sub_perc_mulheres_2016&lt;-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2016]-Perc_mulheres_2011
+
+Year&lt;-rep(c(&quot;2011&quot;,&quot;2012&quot;,&quot;2013&quot;,&quot;2014&quot;,&quot;2015&quot;,&quot;2016&quot;),each=5)
+Country&lt;-rep(c(&quot;Belgium&quot;, &quot;Finland&quot;, &quot;Italy&quot;, &quot;Netherlands&quot;, &quot;Portugal&quot;),6)
+
+Percentagens_mulheres&lt;-c(Perc_mulheres_2011,Sub_perc_mulheres_2012,Sub_perc_mulheres_2013,Sub_perc_mulheres_2014, Sub_perc_mulheres_2015, Sub_perc_mulheres_2016)
+
+Tabela_Questao3_final_mulheres&lt;-data.frame(Year, Country, Percentagens_mulheres)
+
+ggplot(Tabela_Questao3_final_mulheres, aes(x=Tabela_Questao3_final_mulheres$Year, y=Tabela_Questao3_final_mulheres$Percentagens_mulheres, group=Tabela_Questao3_final_mulheres$Country)) +
+  geom_line()+
+  geom_point()+
+  aes(colour = Tabela_Questao3_final_mulheres$Country) +
+  labs(title = &quot;Percentagem de mortes no sexo feminino&quot;, x= &quot;Ano&quot;, y= &quot;Percentagem de mortes&quot;, color = &quot;Países&quot;)</code></pre>
+<p><img src="data:image/png;base64,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" width="672" /></p>
+<pre class="r"><code>#SEXO MASCULINO
+
+Perc_homens_2011&lt;-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2011]
+
+Sub_perc_homens_2012&lt;-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2012]-Perc_homens_2011
+
+Sub_perc_homens_2013&lt;-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2013]-Perc_homens_2011
+
+Sub_perc_homens_2014&lt;-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2014]-Perc_homens_2011
+
+Sub_perc_homens_2015&lt;-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2015]-Perc_homens_2011
+
+Sub_perc_homens_2016&lt;-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2016]-Perc_homens_2011
+
+Percentagens_homens&lt;-c(Perc_homens_2011,Sub_perc_homens_2012,Sub_perc_homens_2013,Sub_perc_homens_2014, Sub_perc_homens_2015, Sub_perc_homens_2016)
+
+Tabela_Questao3_final_homens&lt;-data.frame(Year, Country, Percentagens_homens)
+
+ggplot(data=Tabela_Questao3_final_homens, aes(x=Tabela_Questao3_final_homens$Year, y=Tabela_Questao3_final_homens$Percentagens_homens, group=Tabela_Questao3_final_homens$Country)) +
+  geom_line()+
+  geom_point()+
+  aes(colour = Tabela_Questao3_final_homens$Country) +
+  labs(title = &quot;Percentagem de mortes no sexo masculino&quot;, x= &quot;Ano&quot;, y= &quot;Percentagem de mortes&quot;, color = &quot;Países&quot;)</code></pre>
+<p><img src="data:image/png;base64,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" width="672" /></p>
 
 
 
