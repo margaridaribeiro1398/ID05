@@ -58,15 +58,15 @@ POP <- na.omit(POP)
 totoid<- aggregate(POP$pop, by=list(POP$Year, POP$Country, POP$Sex), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
 setnames(totoid, old = c("Group.1","Group.2","Group.3","x"), new = c("Year", "Country", "Sex","pop"))
-<<<<<<< HEAD
+
 
 totoid<- totoid[-c(1063:1593),]
 
-=======
+
 names(totoid)
 names(POP)
 totoid<- totoid[-c(1063:1593),]
->>>>>>> ce242769d1f0f5bab4e80894a91a0d1b0d21abd8
+
 ageGroup<-rep("All", times = 1062)
 totoid<-cbind(totoid,ageGroup)
 
@@ -89,11 +89,10 @@ CANCRO$Year<-sub("Females", "", CANCRO$Year) #Tirar a palavra Females dos anos
 CANCRO$Year<-sub("Males", "", CANCRO$Year) #Tirar a palavra Males dos anos
 CANCRO$Year<-sub(".", "", CANCRO$Year) #Tirar o underscore dos anos
 
-<<<<<<< HEAD
+
 CANCRO <- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
-=======
+
 CANCRO <- na.omit(CANCRO) 
->>>>>>> ce242769d1f0f5bab4e80894a91a0d1b0d21abd8
 
 CANCRO<- CANCRO[CANCRO$CancerSite=="Bladder",]
 
@@ -117,10 +116,6 @@ CANCRO
 ```{r criar a dataset}
 total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
 #Junção do CANCRO e POP para termos as duas dataframes cruzadas
-<<<<<<< HEAD
-=======
-
->>>>>>> ce242769d1f0f5bab4e80894a91a0d1b0d21abd8
 ```
 
 ```{r mrate2}
@@ -128,11 +123,7 @@ mRate <- 100000*(total$cancer/total$pop)
 mRate<-round(mRate,3)
 
 TabelaFinal<- cbind(total,mRate)
-<<<<<<< HEAD
 TabelaFinal
-=======
-View(TabelaFinal)
-
 ```
 
 ```{r Análise classificatória}
@@ -154,6 +145,39 @@ summary_cancro<-Paises_mulheres_selecionados%>%
 group_by(Country)%>% 
 summarise(Mean=mean(cancer), Max=max(cancer), Min=min(cancer), Median=median(cancer), Std=sd(cancer))
 View(summary_cancro)
+
+```
+
+
+```{r questao 2}
+
+Paises<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
+
+#Grafico para comparar o mrate entre mulheres por faixa etaria em 2016
+PaisesFaixas<- Paises[!Paises$ageGroup %in% c("All"),]
+PaisesFaixas<-PaisesFaixas[PaisesFaixas$Year %in% 2016,]
+PaisesFaixasFem<- PaisesFaixas[PaisesFaixas$Sex %in% "Females",]
+PaisesFaixasFem<-PaisesFaixasFem[!PaisesFaixasFem$ageGroup %in% c("1-4","5-9","10-14","15-19","20-24"),]
+
+ggplot(PaisesFaixasFem, aes(fill=Country, y=mRate, x=ageGroup)) +
+geom_bar(position="dodge", stat="identity")+
+   ggtitle("Taxa de mortalidade no ano de 2016 por faixa etária no sexo feminino")+
+    xlab("Faixas Etárias")+
+    ylab("Taxa de Mortalidade")+
+    coord_flip()
+
+#Grafico para comparar o mrate entre homens por faixa etaria em 2016
+PaisesFaixas<- Paises[!Paises$ageGroup %in% c("All"),]
+PaisesFaixas<-PaisesFaixas[PaisesFaixas$Year %in% 2016,]
+PaisesFaixasMale<- PaisesFaixas[PaisesFaixas$Sex %in% "Males",]
+PaisesFaixasMale<-PaisesFaixasMale[!PaisesFaixasMale$ageGroup %in% c("1-4","5-9","10-14","15-19","20-24", "25-29"),]
+
+ggplot(PaisesFaixasMale, aes(fill=Country, y=mRate, x=ageGroup)) +
+geom_bar(position="dodge", stat="identity")+
+  ggtitle("Taxa de mortalidade no ano de 2016 por faixa etária no sexo masculino")+
+  xlab("Faixas Etárias")+
+  ylab("Taxa de Mortalidade")+
+  coord_flip()
 
 ```
 
@@ -229,44 +253,7 @@ ggplot(data=Tabela_Questao3_final_homens, aes(x=Tabela_Questao3_final_homens$Yea
   aes(colour = Tabela_Questao3_final_homens$Country) +
   labs(title = "Percentagem de mortes no sexo masculino", x= "Ano", y= "Percentagem de mortes", color = "Países")
 
->>>>>>> ce242769d1f0f5bab4e80894a91a0d1b0d21abd8
 ```
-
-
-
-```{r questao 2}
-
-Paises<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
-
-#Grafico para comparar o mrate entre mulheres por faixa etaria em 2016
-PaisesFaixas<- Paises[!Paises$ageGroup %in% c("All"),]
-PaisesFaixas<-PaisesFaixas[PaisesFaixas$Year %in% 2016,]
-PaisesFaixasFem<- PaisesFaixas[PaisesFaixas$Sex %in% "Females",]
-PaisesFaixasFem<-PaisesFaixasFem[!PaisesFaixasFem$ageGroup %in% c("1-4","5-9","10-14","15-19","20-24"),]
-
-ggplot(PaisesFaixasFem, aes(fill=Country, y=mRate, x=ageGroup)) +
-geom_bar(position="dodge", stat="identity")+
-   ggtitle("Taxa de mortalidade no ano de 2016 por faixa etária no sexo feminino")+
-    xlab("Faixas Etárias")+
-    ylab("Taxa de Mortalidade")+
-    coord_flip()
-
-#Grafico para comparar o mrate entre homens por faixa etaria em 2016
-PaisesFaixas<- Paises[!Paises$ageGroup %in% c("All"),]
-PaisesFaixas<-PaisesFaixas[PaisesFaixas$Year %in% 2016,]
-PaisesFaixasMale<- PaisesFaixas[PaisesFaixas$Sex %in% "Males",]
-PaisesFaixasMale<-PaisesFaixasMale[!PaisesFaixasMale$ageGroup %in% c("1-4","5-9","10-14","15-19","20-24", "25-29"),]
-
-ggplot(PaisesFaixasMale, aes(fill=Country, y=mRate, x=ageGroup)) +
-geom_bar(position="dodge", stat="identity")+
-  ggtitle("Taxa de mortalidade no ano de 2016 por faixa etária no sexo masculino")+
-  xlab("Faixas Etárias")+
-  ylab("Taxa de Mortalidade")+
-  coord_flip()
-
-```
-
-
 
 
 
