@@ -12,12 +12,10 @@ knitr::opts_chunk$set(error = TRUE)
 ```{r read dados cancro}
 dadoscancro<- read.csv(file = "data/CancerMortalityEU.csv")
 names(dadoscancro)
-
 ```
 
 
 ```{r dados pop}
-
 dadospopulacao <- read.csv( file = "data/PopulationEU.csv")
 names(dadospopulacao)
 ```
@@ -30,6 +28,8 @@ install.packages("tidyverse")
 install.packages("dplyr")
 install.packages("here")
 install.packages(c("tidyr", "devtools"))
+install.packages("plyr")
+library(plyr)
 library(data.table)
 library(rmarkdown)
 library(tidyr)
@@ -42,7 +42,6 @@ library(here)
 
 ```{r organizar dataframe da população}
 novopop<-dadospopulacao[,-c(3,5)]
-names(novopop)
 
 POP<-gather(novopop,"Year","pop",4:22)
 POP$Year<-sub(".", "", POP$Year)  #Tirar o primeiro caracter (X) dos anos
@@ -54,17 +53,14 @@ POP <- na.omit(POP)
 totoid<- aggregate(POP$pop, by=list(POP$Year, POP$Country, POP$Sex), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
 setnames(totoid, old = c("Group.1","Group.2","Group.3","x"), new = c("Year", "Country", "Sex","pop"))
-names(totoid)
-names(POP)
+
 totoid<- totoid[-c(1063:1593),]
-
-
 
 ageGroup<-rep("All", times = 1062)
 totoid<-cbind(totoid,ageGroup)
 
 POP<- rbind(POP, totoid)
-
+POP
 ```
 
 
@@ -72,9 +68,7 @@ POP<- rbind(POP, totoid)
 ```{r organizar dataframe dos cancros}
 
 #Cancros
-names(dadoscancro)
 novocancro<-dadoscancro[,-c(2,4,6)]
-names(novocancro)
 
 CANCRO<-gather(novocancro,"Year","cancer",4:17)
 Sex<- rep(c("Females", "Males"), times = c(63504,63504))
@@ -86,9 +80,8 @@ CANCRO$Year<-sub(".", "", CANCRO$Year) #Tirar o underscore dos anos
 
 CANCRO <- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
 
-
 CANCRO<- CANCRO[CANCRO$CancerSite=="Bladder",]
-View(CANCRO)
+
 
 ```
 
@@ -97,38 +90,132 @@ View(CANCRO)
 mortes<- aggregate(CANCRO$cancer, by=list(CANCRO$Year, CANCRO$Country, CANCRO$Sex, CANCRO$CancerSite), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
 setnames(mortes, old = c("Group.1","Group.2","Group.3","Group.4","x"), new = c("Year", "Country", "Sex","CancerSite","cancer"))
-names(mortes)
-names(CANCRO)
-
 
 ageGroup<-rep("All", times = 374)
 mortes<-cbind(mortes,ageGroup)
 
 CANCRO<- rbind(CANCRO, mortes)
+CANCRO
 
 ```
 
 
 
 ```{r criar a dataset}
-
 total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
 #Junção do CANCRO e POP para termos as duas dataframes cruzadas
-
-
 ```
 
 
 ```{r mrate2}
-
 mRate <- 100000*(total$cancer/total$pop)
 mRate<-round(mRate,3)
 
 TabelaFinal<- cbind(total,mRate)
 TabelaFinal
-View(TabelaFinal)
 ```
 
 
 
+```{r questao 2}
+
+Paises<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
+
+#Grafico para comparar o mrate entre mulheres por faixa etaria em 2016
+PaisesFaixas<- Paises[!Paises$ageGroup %in% c("All"),]
+PaisesFaixas<-PaisesFaixas[PaisesFaixas$Year %in% 2016,]
+PaisesFaixasFem<- PaisesFaixas[PaisesFaixas$Sex %in% "Females",]
+PaisesFaixasFem<-PaisesFaixasFem[!PaisesFaixasFem$ageGroup %in% c("1-4","5-9","10-14","15-19","20-24"),]
+
+ggplot(PaisesFaixasFem, aes(fill=Country, y=mRate, x=ageGroup)) +
+geom_bar(position="dodge", stat="identity")+
+   ggtitle("Taxa de mortalidade no ano de 2016 por faixa etária no sexo feminino")+
+    xlab("Faixas Etárias")+
+    ylab("Taxa de Mortalidade")+
+    coord_flip()
+
+#Grafico para comparar o mrate entre homens por faixa etaria em 2016
+PaisesFaixas<- Paises[!Paises$ageGroup %in% c("All"),]
+PaisesFaixas<-PaisesFaixas[PaisesFaixas$Year %in% 2016,]
+PaisesFaixasMale<- PaisesFaixas[PaisesFaixas$Sex %in% "Males",]
+PaisesFaixasMale<-PaisesFaixasMale[!PaisesFaixasMale$ageGroup %in% c("1-4","5-9","10-14","15-19","20-24", "25-29"),]
+
+ggplot(PaisesFaixasMale, aes(fill=Country, y=mRate, x=ageGroup)) +
+geom_bar(position="dodge", stat="identity")+
+  ggtitle("Taxa de mortalidade no ano de 2016 por faixa etária no sexo masculino")+
+  xlab("Faixas Etárias")+
+  ylab("Taxa de Mortalidade")+
+  coord_flip()
+
+```
+
+
+
+
+
+```{r questão4}
+#What are the five (5) most common cancers in 2011? in 2017 for your countries?
+tratamento_dataframe2<-dadoscancro[,-c(2,4,6)]
+
+TodosCancros<-gather(novocancro,"Year","cancer",4:17)
+Sex<- rep(c("Females", "Males"), times = c(63504,63504))
+TodosCancros<-cbind(TodosCancros,Sex)
+
+TodosCancros$Year<-sub("Females", "", TodosCancros$Year) #Tirar a palavra Females dos anos
+TodosCancros$Year<-sub("Males", "", TodosCancros$Year) #Tirar a palavra Males dos anos
+TodosCancros$Year<-sub(".", "", TodosCancros$Year) #Tirar o underscore dos anos
+
+TodosCancros <- na.omit(TodosCancros) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
+
+add_all<- aggregate(TodosCancros$cancer, by=list(TodosCancros$Year, TodosCancros$Country, TodosCancros$Sex, TodosCancros$CancerSite), FUN=sum)
+#Dataframe das mortes relativas ao cancro por Ano, País e Sexo
+setnames(add_all, old = c("Group.1","Group.2","Group.3","Group.4","x"), new = c("Year", "Country", "Sex","CancerSite","cancer"))
+
+ageGroup<-rep("All", times = 5952)
+add_all<-cbind(add_all,ageGroup)
+
+TodosCancros<- rbind(TodosCancros, add_all)
+
+
+total<-merge(POP,TodosCancros, by=c("Country", "Sex", "Year", "ageGroup"))
+mRate <- 100000*(total$cancer/total$pop)
+mRate<-round(mRate,3)
+
+TabelaFinal2<- cbind(total,mRate)
+
+Paises<- TabelaFinal2[TabelaFinal2$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
+
+
+#Cancros mais comuns em 2011
+Paises_2011<-Paises[Paises$Year %in% 2011,]
+Paises_2011<-Paises_2011[Paises_2011$ageGroup %in% "All",]
+Paises_2011<-Paises_2011[!Paises_2011$CancerSite %in% "All Cancers",]
+
+
+levels(Paises_2011$CancerSite) <- list(CRJRAAC="Colon, Rectosigmoid Junction, Rectum, Anus and Anal Canal", BCNS="Brain and Central Nervous System", Larynx="Larynx", Ovary="Ovary", Oesophagus="Oesophagus", LIBD="Liver and Intrahepatic Bile Ducts", LOCP="Lip, Oral Cavity, Pharynx", Breast="Breast", Bladder="Bladder", KERP="Kidney, Except Renal Pelvis", Pancreas="Pancreas", ThyroidGland="Thyroid Gland", OPFU="Other Parts of Uterus", TBL="Trachea, Bronchus and Lung",Stomach= "Stomach", CervixUteri="Cervix Uteri", Prostate="Prostate", ALL="ALL" )
+
+ggplot(Paises_2011, aes(fill=Sex, y=Paises_2011$mRate, x=Paises_2011$CancerSite)) +
+geom_bar(position="dodge", stat="identity")+
+   labs(title = "Cancros mais comuns em 2011", x= "Tipos de cancro por sexo", y= "Taxa de mortalidade", fill = "Sexo")+
+    geom_text(aes(label = Paises_2011$mRate, y = Paises_2011$mRate + 0.05),
+    position = position_dodge(0.9),vjust = 0, size = 2)+
+    facet_grid(Paises_2011$Country)
+
+
+
+#Cancros mais comuns em 2016
+Paises<- TabelaFinal2[TabelaFinal2$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
+Paises_2016<-Paises[Paises$Year %in% 2016,]
+Paises_2016<-Paises_2016[Paises_2016$ageGroup %in% "All",]
+Paises_2016<-Paises_2016[!Paises_2016$CancerSite %in% "All Cancers",]
+
+levels(Paises_2016$CancerSite) <- list(CRJRAAC="Colon, Rectosigmoid Junction, Rectum, Anus and Anal Canal", BCNS="Brain and Central Nervous System", Larynx="Larynx", Ovary="Ovary", Oesophagus="Oesophagus", LIBD="Liver and Intrahepatic Bile Ducts", LOCP="Lip, Oral Cavity, Pharynx", Breast="Breast", Bladder="Bladder", KERP="Kidney, Except Renal Pelvis", Pancreas="Pancreas", ThyroidGland="Thyroid Gland", OPFU="Other Parts of Uterus", TBL="Trachea, Bronchus and Lung",Stomach= "Stomach", CervixUteri="Cervix Uteri", Prostate="Prostate", ALL="ALL" )
+
+ggplot(Paises_2016, aes(fill=Sex, y=Paises_2016$mRate, x=Paises_2016$CancerSite)) +
+geom_bar(position="dodge", stat="identity")+
+   labs(title = "Cancros mais comuns em 2016", x= "Tipos de cancro por sexo", y= "Taxa de mortalidade", fill = "Sexo")+
+    geom_text(aes(label = Paises_2016$mRate, y = Paises_2016$mRate + 0.05),
+    position = position_dodge(0.9),vjust = 0, size = 2)+
+    facet_grid(Paises_2016$Country)
+```
 
