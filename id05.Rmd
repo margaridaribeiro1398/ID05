@@ -126,20 +126,20 @@ TabelaFinal<- cbind(total,mRate)
 TabelaFinal
 ```
 
-```{r Análise classificatória}
+```{r Análise exploratória}
 
 Paises_mulheres_selecionados<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",]
 View(Paises_mulheres_selecionados)
 Paises_mulheres_selecionados<-Paises_mulheres_selecionados[,-c(2,3,4,6,8)]
 
-#Analise Classificatória População
+#Analise exploratória População
 
 summary_pop<-Paises_mulheres_selecionados%>%
 group_by(Country)%>% 
 summarise(Mean=mean(pop), Max=max(pop), Min=min(pop), Median=median(pop), Std=sd(pop))
 View(summary_pop)
 
-#Analise Classificatória Nº de cancros
+#Analise exploratória Nº de cancros
 
 summary_cancro<-Paises_mulheres_selecionados%>%
 group_by(Country)%>% 
@@ -147,6 +147,8 @@ summarise(Mean=mean(cancer), Max=max(cancer), Min=min(cancer), Median=median(can
 View(summary_cancro)
 
 ```
+
+
 ```{r questão 1}
 
 Paises_mulheres<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",]
