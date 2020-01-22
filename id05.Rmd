@@ -2,7 +2,9 @@
 title: "ID05"
 author: "Grupo 05"
 date: "16/01/2020"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r, echo=FALSE}
@@ -10,6 +12,7 @@ knitr::opts_chunk$set(error = TRUE)
 ```
 
 ```{r read dados cancro}
+
 dadoscancro<- read.csv(file = "data/CancerMortalityEU.csv")
 names(dadoscancro)
 
@@ -41,6 +44,7 @@ library(here)
 ```
 
 ```{r organizar dataframe da população}
+
 novopop<-dadospopulacao[,-c(3,5)]
 names(novopop)
 
@@ -51,15 +55,13 @@ POP <- na.omit(POP)
 
 
 ```{r all idades pop}
+
 totoid<- aggregate(POP$pop, by=list(POP$Year, POP$Country, POP$Sex), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
 setnames(totoid, old = c("Group.1","Group.2","Group.3","x"), new = c("Year", "Country", "Sex","pop"))
 names(totoid)
 names(POP)
 totoid<- totoid[-c(1063:1593),]
-
-
-
 ageGroup<-rep("All", times = 1062)
 totoid<-cbind(totoid,ageGroup)
 
@@ -84,16 +86,15 @@ CANCRO$Year<-sub("Females", "", CANCRO$Year) #Tirar a palavra Females dos anos
 CANCRO$Year<-sub("Males", "", CANCRO$Year) #Tirar a palavra Males dos anos
 CANCRO$Year<-sub(".", "", CANCRO$Year) #Tirar o underscore dos anos
 
-CANCRO <- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
-
+CANCRO <- na.omit(CANCRO) 
 
 CANCRO<- CANCRO[CANCRO$CancerSite=="Bladder",]
 View(CANCRO)
 
 ```
 
-
 ```{r all idades cancro}
+
 mortes<- aggregate(CANCRO$cancer, by=list(CANCRO$Year, CANCRO$Country, CANCRO$Sex, CANCRO$CancerSite), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
 setnames(mortes, old = c("Group.1","Group.2","Group.3","Group.4","x"), new = c("Year", "Country", "Sex","CancerSite","cancer"))
@@ -108,16 +109,12 @@ CANCRO<- rbind(CANCRO, mortes)
 
 ```
 
-
-
 ```{r criar a dataset}
 
 total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
 #Junção do CANCRO e POP para termos as duas dataframes cruzadas
 
-
 ```
-
 
 ```{r mrate2}
 
@@ -125,9 +122,106 @@ mRate <- 100000*(total$cancer/total$pop)
 mRate<-round(mRate,3)
 
 TabelaFinal<- cbind(total,mRate)
-TabelaFinal
 View(TabelaFinal)
+
 ```
+
+```{r Análise classificatória}
+
+Paises_mulheres_selecionados<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",]
+View(Paises_mulheres_selecionados)
+Paises_mulheres_selecionados<-Paises_mulheres_selecionados[,-c(2,3,4,6,8)]
+
+#Analise Classificatória População
+
+summary_pop<-Paises_mulheres_selecionados%>%
+group_by(Country)%>% 
+summarise(Mean=mean(pop), Max=max(pop), Min=min(pop), Median=median(pop), Std=sd(pop))
+View(summary_pop)
+
+#Analise Classificatória Nº de cancros
+
+summary_cancro<-Paises_mulheres_selecionados%>%
+group_by(Country)%>% 
+summarise(Mean=mean(cancer), Max=max(cancer), Min=min(cancer), Median=median(cancer), Std=sd(cancer))
+View(summary_cancro)
+
+```
+
+```{r Questão 3}
+
+#DATA FRAME COM AS PERCENTAGENS 
+
+Paises<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
+
+Paises_mulheres<- Paises[Paises$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & Paises$Sex == "Females" & Paises$ageGroup == "All",] 
+
+Paises_homens<- Paises[Paises$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & Paises$Sex == "Males" & Paises$ageGroup == "All",]
+
+Pop_ambos_sexos<- aggregate(Paises$pop, by=list(Paises$Year, Paises$ageGroup, Paises$Country), FUN=sum) #somar a população do sexo feminino e masculino por classe etária, ano e país
+
+All_idades<-Pop_ambos_sexos[Pop_ambos_sexos$Group.2 == "All",] #selecionar apenas a classe etária com todas as idades
+setnames(All_idades, old = c("Group.1","Group.2","Group.3","x"), new = c("Year", "ageGroup", "Country","pop"))
+
+Percentagem_mulheres<-(Paises_mulheres$cancer/All_idades$pop)*100
+
+Percentagem_homens<-(Paises_homens$cancer/All_idades$pop)*100
+
+Tabela_Questao3<-cbind(All_idades,Percentagem_mulheres,Percentagem_homens)
+
+#SEXO FEMININO
+
+Perc_mulheres_2011<-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2011]
+
+Sub_perc_mulheres_2012<-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2012]-Perc_mulheres_2011
+
+Sub_perc_mulheres_2013<-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2013]-Perc_mulheres_2011
+
+Sub_perc_mulheres_2014<-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2014]-Perc_mulheres_2011
+
+Sub_perc_mulheres_2015<-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2015]-Perc_mulheres_2011
+
+Sub_perc_mulheres_2016<-Tabela_Questao3$Percentagem_mulheres[Tabela_Questao3$Year == 2016]-Perc_mulheres_2011
+
+Year<-rep(c("2011","2012","2013","2014","2015","2016"),each=5)
+Country<-rep(c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),6)
+
+Percentagens_mulheres<-c(Perc_mulheres_2011,Sub_perc_mulheres_2012,Sub_perc_mulheres_2013,Sub_perc_mulheres_2014, Sub_perc_mulheres_2015, Sub_perc_mulheres_2016)
+
+Tabela_Questao3_final_mulheres<-data.frame(Year, Country, Percentagens_mulheres)
+
+ggplot(Tabela_Questao3_final_mulheres, aes(x=Tabela_Questao3_final_mulheres$Year, y=Tabela_Questao3_final_mulheres$Percentagens_mulheres, group=Tabela_Questao3_final_mulheres$Country)) +
+  geom_line()+
+  geom_point()+
+  aes(colour = Tabela_Questao3_final_mulheres$Country) +
+  labs(title = "Percentagem de mortes no sexo feminino", x= "Ano", y= "Percentagem de mortes", color = "Países")
+
+#SEXO MASCULINO
+
+Perc_homens_2011<-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2011]
+
+Sub_perc_homens_2012<-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2012]-Perc_homens_2011
+
+Sub_perc_homens_2013<-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2013]-Perc_homens_2011
+
+Sub_perc_homens_2014<-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2014]-Perc_homens_2011
+
+Sub_perc_homens_2015<-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2015]-Perc_homens_2011
+
+Sub_perc_homens_2016<-Tabela_Questao3$Percentagem_homens[Tabela_Questao3$Year == 2016]-Perc_homens_2011
+
+Percentagens_homens<-c(Perc_homens_2011,Sub_perc_homens_2012,Sub_perc_homens_2013,Sub_perc_homens_2014, Sub_perc_homens_2015, Sub_perc_homens_2016)
+
+Tabela_Questao3_final_homens<-data.frame(Year, Country, Percentagens_homens)
+
+ggplot(data=Tabela_Questao3_final_homens, aes(x=Tabela_Questao3_final_homens$Year, y=Tabela_Questao3_final_homens$Percentagens_homens, group=Tabela_Questao3_final_homens$Country)) +
+  geom_line()+
+  geom_point()+
+  aes(colour = Tabela_Questao3_final_homens$Country) +
+  labs(title = "Percentagem de mortes no sexo masculino", x= "Ano", y= "Percentagem de mortes", color = "Países")
+
+```
+
 
 
 
