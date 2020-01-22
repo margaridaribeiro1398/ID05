@@ -147,7 +147,91 @@ summarise(Mean=mean(cancer), Max=max(cancer), Min=min(cancer), Median=median(can
 View(summary_cancro)
 
 ```
+```{r questão 1}
 
+Paises_mulheres<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",]
+View(Paises_mulheres)
+
+ggplot(Paises_mulheres, aes(x=Paises_mulheres$Year, y=Paises_mulheres$mRate, group=Paises_mulheres$Country)) +
+  geom_line()+
+  geom_point()+
+  aes(colour = Paises_mulheres$Country) +
+  labs(title = "Ratio de mortes feminino nos países selecionados", x= "Ano", y= "Ratio de mortes", color = "Paises")
+
+
+
+Paises_homens<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & TabelaFinal$Sex=="Males" & TabelaFinal$ageGroup=="All",]
+
+
+ggplot(Paises_homens, aes(x=Paises_homens$Year, y=Paises_homens$mRate, group=Paises_homens$Country)) +
+  geom_line()+
+  geom_point()+
+  aes(colour = Paises_homens$Country) +
+  labs(title = "Ratio de mortes masculino nos países selecionados", x= "Ano", y= "Ratio de mortes", color = "Paises")
+
+```
+
+```{r questão 1 UE}
+Paisestodos_mulheres<-TabelaFinal[TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",-8]
+sPOPPaisestodos_mulheres<- aggregate(Paisestodos_mulheres$pop, by=list(Paisestodos_mulheres$Year), FUN=sum)
+
+sCANCERPaisestodos_mulheres<- aggregate(Paisestodos_mulheres$cancer, by=list(Paisestodos_mulheres$Year), FUN=sum)
+
+uniaoeuropeia<-cbind(sPOPPaisestodos_mulheres,sCANCERPaisestodos_mulheres)
+uniaoeuropeia<-uniaoeuropeia[,-3]
+setnames(uniaoeuropeia,old=c("Group.1","x","x.1"), new=c("Year","pop","cancer"))
+mRate <- 100000*(uniaoeuropeia$cancer/uniaoeuropeia$pop)
+mRate<-round(mRate,3)
+uniaoeuropeiafinalmulheres<- cbind(uniaoeuropeia,mRate)
+View(uniaoeuropeiafinal)
+Country<-rep("European Union",7)
+Sex<-rep("Females",7)
+CancerSite<-rep("Bladder",7)
+ageGroup<-rep("All",7)
+uniaoeuropeiafinalmulheres<-cbind(Country,uniaoeuropeiafinalmulheres,Sex,CancerSite,ageGroup)
+View(uniaoeuropeiafinalmulheres)
+Paises_mulheres<-rbind(uniaoeuropeiafinalmulheres,Paises_mulheres)
+
+
+Paisestodos_homens<-TabelaFinal[TabelaFinal$Sex=="Males" & TabelaFinal$ageGroup=="All",-8]
+sPOPPaisestodos_homens<- aggregate(Paisestodos_homens$pop, by=list(Paisestodos_homens$Year), FUN=sum)
+
+sCANCERPaisestodos_homens<- aggregate(Paisestodos_homens$cancer, by=list(Paisestodos_homens$Year), FUN=sum)
+
+uniaoeuropeia<-cbind(sPOPPaisestodos_homens,sCANCERPaisestodos_homens)
+uniaoeuropeia<-uniaoeuropeia[,-3]
+setnames(uniaoeuropeia,old=c("Group.1","x","x.1"), new=c("Year","pop","cancer"))
+mRate <- 100000*(uniaoeuropeia$cancer/uniaoeuropeia$pop)
+mRate<-round(mRate,3)
+uniaoeuropeiafinalhomens<- cbind(uniaoeuropeia,mRate)
+View(uniaoeuropeiafinalhomens)
+
+Country<-rep("European Union",7)
+Sex<-rep("Males",7)
+CancerSite<-rep("Bladder",7)
+ageGroup<-rep("All",7)
+uniaoeuropeiafinalhomens<-cbind(Country,uniaoeuropeiafinalhomens,Sex,CancerSite,ageGroup)
+View(uniaoeuropeiafinalhomens)
+Paises_homens<-rbind(uniaoeuropeiafinalhomens,Paises_homens)
+
+
+
+
+ggplot(Paises_mulheres, aes(x=Paises_mulheres$Year, y=Paises_mulheres$mRate, group=Paises_mulheres$Country)) +
+  geom_line()+
+  geom_point()+
+  aes(colour = Paises_mulheres$Country)+
+  labs(title = "Ratio de mortes feminino nos países selecionados e na UE", x= "Ano", y= "Ratio de mortes", color = "Paises")
+
+ggplot(Paises_homens, aes(x=Paises_homens$Year, y=Paises_homens$mRate, group=Paises_homens$Country)) +
+  geom_line()+
+  geom_point()+
+  aes(colour = Paises_homens$Country)+
+  labs(title = "Ratio de mortes masculino nos países selecionados e na UE", x= "Ano", y= "Ratio de mortes", color = "Paises")
+ 
+
+
+```
 
 ```{r questao 2}
 
