@@ -3,8 +3,8 @@ title: "ID05"
 author: "Grupo 05"
 date: "16/01/2020"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r, echo=FALSE}
@@ -12,15 +12,12 @@ knitr::opts_chunk$set(error = TRUE)
 ```
 
 ```{r read dados cancro}
-
 dadoscancro<- read.csv(file = "data/CancerMortalityEU.csv")
-names(dadoscancro)
 ```
 
 
 ```{r dados pop}
 dadospopulacao <- read.csv( file = "data/PopulationEU.csv")
-names(dadospopulacao)
 ```
 
 ```{r packages}
@@ -30,13 +27,14 @@ install.packages("ggplot2")
 install.packages("tidyverse")
 install.packages("dplyr")
 install.packages("here")
-install.packages(c("tidyr", "devtools"))
+install.packages("tidyr")
 install.packages("plyr")
+install.packages("knitr")
+library(knitr)
 library(plyr)
 library(data.table)
 library(rmarkdown)
 library(tidyr)
-library(devtools)
 library(ggplot2)
 library(tidyverse)
 library(dplyr)
@@ -44,7 +42,6 @@ library(here)
 ```
 
 ```{r organizar dataframe da população}
-
 novopop<-dadospopulacao[,-c(3,5)]
 
 POP<-gather(novopop,"Year","pop",4:22)
@@ -54,34 +51,28 @@ POP <- na.omit(POP)
 
 
 ```{r all idades pop}
-
 totoid<- aggregate(POP$pop, by=list(POP$Year, POP$Country, POP$Sex), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
 setnames(totoid, old = c("Group.1","Group.2","Group.3","x"), new = c("Year", "Country", "Sex","pop"))
-
-
 totoid<- totoid[-c(1063:1593),]
 
-
-names(totoid)
-names(POP)
 totoid<- totoid[-c(1063:1593),]
 
 ageGroup<-rep("All", times = 1062)
 totoid<-cbind(totoid,ageGroup)
 
 POP<- rbind(POP, totoid)
-POP
+head(POP)
 ```
 
 
 
 ```{r organizar dataframe dos cancros}
-
 #Cancros
-novocancro<-dadoscancro[,-c(2,4,6)]
+#Cancros
+novocancro<-dadoscancro[,-c(4,6)]
 
-CANCRO<-gather(novocancro,"Year","cancer",4:17)
+CANCRO<-gather(novocancro,"Year","cancer",5:18)
 Sex<- rep(c("Females", "Males"), times = c(63504,63504))
 CANCRO<-cbind(CANCRO,Sex)
 
@@ -91,26 +82,20 @@ CANCRO$Year<-sub(".", "", CANCRO$Year) #Tirar o underscore dos anos
 
 
 CANCRO <- na.omit(CANCRO) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
-
-CANCRO <- na.omit(CANCRO) 
-
 CANCRO<- CANCRO[CANCRO$CancerSite=="Bladder",]
-
 
 ```
 
 ```{r all idades cancro}
-
-mortes<- aggregate(CANCRO$cancer, by=list(CANCRO$Year, CANCRO$Country, CANCRO$Sex, CANCRO$CancerSite), FUN=sum)
+mortes<- aggregate(CANCRO$cancer, by=list(CANCRO$Year, CANCRO$Country, CANCRO$Sex, CANCRO$CancerSite, CANCRO$Cause), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
-setnames(mortes, old = c("Group.1","Group.2","Group.3","Group.4","x"), new = c("Year", "Country", "Sex","CancerSite","cancer"))
+setnames(mortes, old = c("Group.1","Group.2","Group.3","Group.4","Group.5","x"), new = c("Year", "Country", "Sex","CancerSite","Cause", "cancer"))
 
 ageGroup<-rep("All", times = 374)
 mortes<-cbind(mortes,ageGroup)
 
 CANCRO<- rbind(CANCRO, mortes)
-CANCRO
-
+head(CANCRO)
 ```
 
 ```{r criar a dataset}
@@ -119,17 +104,16 @@ total<-merge(POP,CANCRO, by=c("Country", "Sex", "Year", "ageGroup"))
 ```
 
 ```{r mrate2}
+
 mRate <- 100000*(total$cancer/total$pop)
 mRate<-round(mRate,3)
 
 TabelaFinal<- cbind(total,mRate)
-TabelaFinal
+head(TabelaFinal)
 ```
 
 ```{r Análise exploratória}
-
 Paises_mulheres_selecionados<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",]
-View(Paises_mulheres_selecionados)
 Paises_mulheres_selecionados<-Paises_mulheres_selecionados[,-c(2,3,4,6,8)]
 
 #Analise exploratória População
@@ -137,29 +121,26 @@ Paises_mulheres_selecionados<-Paises_mulheres_selecionados[,-c(2,3,4,6,8)]
 summary_pop<-Paises_mulheres_selecionados%>%
 group_by(Country)%>% 
 summarise(Mean=mean(pop), Max=max(pop), Min=min(pop), Median=median(pop), Std=sd(pop))
-View(summary_pop)
 
 #Analise exploratória Nº de cancros
 
 summary_cancro<-Paises_mulheres_selecionados%>%
 group_by(Country)%>% 
 summarise(Mean=mean(cancer), Max=max(cancer), Min=min(cancer), Median=median(cancer), Std=sd(cancer))
-View(summary_cancro)
+
 
 ```
 
 
 ```{r questão 1}
-
 Paises_mulheres<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",]
-View(Paises_mulheres)
+
 
 ggplot(Paises_mulheres, aes(x=Paises_mulheres$Year, y=Paises_mulheres$mRate, group=Paises_mulheres$Country)) +
   geom_line()+
   geom_point()+
   aes(colour = Paises_mulheres$Country) +
   labs(title = "Ratio de mortes feminino nos países selecionados", x= "Ano", y= "Ratio de mortes", color = "Paises")
-
 
 
 Paises_homens<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal") & TabelaFinal$Sex=="Males" & TabelaFinal$ageGroup=="All",]
@@ -174,7 +155,7 @@ ggplot(Paises_homens, aes(x=Paises_homens$Year, y=Paises_homens$mRate, group=Pai
 ```
 
 ```{r questão 1 UE}
-Paisestodos_mulheres<-TabelaFinal[TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",-8]
+Paisestodos_mulheres<-TabelaFinal[TabelaFinal$Sex=="Females" & TabelaFinal$ageGroup=="All",-9]
 sPOPPaisestodos_mulheres<- aggregate(Paisestodos_mulheres$pop, by=list(Paisestodos_mulheres$Year), FUN=sum)
 
 sCANCERPaisestodos_mulheres<- aggregate(Paisestodos_mulheres$cancer, by=list(Paisestodos_mulheres$Year), FUN=sum)
@@ -190,12 +171,12 @@ Country<-rep("European Union",7)
 Sex<-rep("Females",7)
 CancerSite<-rep("Bladder",7)
 ageGroup<-rep("All",7)
-uniaoeuropeiafinalmulheres<-cbind(Country,uniaoeuropeiafinalmulheres,Sex,CancerSite,ageGroup)
-View(uniaoeuropeiafinalmulheres)
+Cause<-rep("Malignant neoplasm of bladder",7)
+uniaoeuropeiafinalmulheres<-cbind(Country,uniaoeuropeiafinalmulheres,Sex,CancerSite,ageGroup, Cause)
 Paises_mulheres<-rbind(uniaoeuropeiafinalmulheres,Paises_mulheres)
 
 
-Paisestodos_homens<-TabelaFinal[TabelaFinal$Sex=="Males" & TabelaFinal$ageGroup=="All",-8]
+Paisestodos_homens<-TabelaFinal[TabelaFinal$Sex=="Males" & TabelaFinal$ageGroup=="All",-9]
 sPOPPaisestodos_homens<- aggregate(Paisestodos_homens$pop, by=list(Paisestodos_homens$Year), FUN=sum)
 
 sCANCERPaisestodos_homens<- aggregate(Paisestodos_homens$cancer, by=list(Paisestodos_homens$Year), FUN=sum)
@@ -206,17 +187,15 @@ setnames(uniaoeuropeia,old=c("Group.1","x","x.1"), new=c("Year","pop","cancer"))
 mRate <- 100000*(uniaoeuropeia$cancer/uniaoeuropeia$pop)
 mRate<-round(mRate,3)
 uniaoeuropeiafinalhomens<- cbind(uniaoeuropeia,mRate)
-View(uniaoeuropeiafinalhomens)
+
 
 Country<-rep("European Union",7)
 Sex<-rep("Males",7)
 CancerSite<-rep("Bladder",7)
 ageGroup<-rep("All",7)
-uniaoeuropeiafinalhomens<-cbind(Country,uniaoeuropeiafinalhomens,Sex,CancerSite,ageGroup)
-View(uniaoeuropeiafinalhomens)
+Cause<-rep("Malignant neoplasm of bladder",7)
+uniaoeuropeiafinalhomens<-cbind(Country,uniaoeuropeiafinalhomens,Sex,CancerSite,ageGroup, Cause)
 Paises_homens<-rbind(uniaoeuropeiafinalhomens,Paises_homens)
-
-
 
 
 ggplot(Paises_mulheres, aes(x=Paises_mulheres$Year, y=Paises_mulheres$mRate, group=Paises_mulheres$Country)) +
@@ -235,7 +214,9 @@ ggplot(Paises_homens, aes(x=Paises_homens$Year, y=Paises_homens$mRate, group=Pai
 
 ```
 
-```{r questao 2}
+# Comparar a taxa de mortalidade dos países em 2016 por faixas etárias.
+
+```{r questao2 females}
 
 Paises<- TabelaFinal[TabelaFinal$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
 
@@ -246,12 +227,19 @@ PaisesFaixasFem<- PaisesFaixas[PaisesFaixas$Sex %in% "Females",]
 PaisesFaixasFem<-PaisesFaixasFem[!PaisesFaixasFem$ageGroup %in% c("1-4","5-9","10-14","15-19","20-24"),]
 
 ggplot(PaisesFaixasFem, aes(fill=Country, y=mRate, x=ageGroup)) +
-geom_bar(position="dodge", stat="identity")+
+geom_bar(position=position_dodge(0.5), stat="identity")+
    ggtitle("Taxa de mortalidade no ano de 2016 por faixa etária no sexo feminino")+
     xlab("Faixas Etárias")+
     ylab("Taxa de Mortalidade")+
     coord_flip()
 
+```
+Com o objectivo de comparar, por faixas etárias, a taxa de mortalidade das mulheres relativa ao cancro da bexiga entre os países selecionados, construiu-se um gráfico de barras para uma melhor precepção dos dados.
+As idades entre 1 e 24 anos foram retiradas, porque não houve nenhuma ocorrência de morte relativa ao cancro da bexiga nas mulheres em nenhum dos país.
+Numa primeira análise, sobresai a faixa etária "Mais de 85 anos" por apresentar os valores mais elevados relativos à taxa de mortalidade. Esta observação era esperada pois, segundo a informação sobre o cancro da bexiga disponibilizada pela Roche[1], este tipo de patologia tem uma maior probabilidade de desenvolver-se com o aumento da idade e são poucos os casos, cuja idade seja inferior a 40 anos que apresente tumores na bexiga.
+Portugal é o país que apresenta a taxa mais elevada em relação aos restantes 4 países.
+Nas faixas etárias 75-79 e 80-85 são os Países Baixos com uma taxa de mortalidade significativamente superior comparando com os restantes países.
+```{r questao2males}
 #Grafico para comparar o mrate entre homens por faixa etaria em 2016
 PaisesFaixas<- Paises[!Paises$ageGroup %in% c("All"),]
 PaisesFaixas<-PaisesFaixas[PaisesFaixas$Year %in% 2016,]
@@ -259,13 +247,16 @@ PaisesFaixasMale<- PaisesFaixas[PaisesFaixas$Sex %in% "Males",]
 PaisesFaixasMale<-PaisesFaixasMale[!PaisesFaixasMale$ageGroup %in% c("1-4","5-9","10-14","15-19","20-24", "25-29"),]
 
 ggplot(PaisesFaixasMale, aes(fill=Country, y=mRate, x=ageGroup)) +
-geom_bar(position="dodge", stat="identity")+
+geom_bar(position=position_dodge(0.5), stat="identity")+
   ggtitle("Taxa de mortalidade no ano de 2016 por faixa etária no sexo masculino")+
   xlab("Faixas Etárias")+
   ylab("Taxa de Mortalidade")+
   coord_flip()
 
 ```
+
+
+
 
 ```{r Questão 3}
 
@@ -341,37 +332,45 @@ ggplot(data=Tabela_Questao3_final_homens, aes(x=Tabela_Questao3_final_homens$Yea
 
 ```
 
+```{r criacao da tidy tabela com todos os cancros}
+tratamento_dataframe2<-dadoscancro[,-c(4,6)]
 
-
-```{r questão4}
-#What are the five (5) most common cancers in 2011? in 2017 for your countries?
-tratamento_dataframe2<-dadoscancro[,-c(2,4,6)]
-
-TodosCancros<-gather(novocancro,"Year","cancer",4:17)
+df_cancro<-gather(tratamento_dataframe2,"Year","cancer",5:18)
 Sex<- rep(c("Females", "Males"), times = c(63504,63504))
-TodosCancros<-cbind(TodosCancros,Sex)
+df_cancro<-cbind(df_cancro,Sex)
 
-TodosCancros$Year<-sub("Females", "", TodosCancros$Year) #Tirar a palavra Females dos anos
-TodosCancros$Year<-sub("Males", "", TodosCancros$Year) #Tirar a palavra Males dos anos
-TodosCancros$Year<-sub(".", "", TodosCancros$Year) #Tirar o underscore dos anos
+df_cancro$Year<-sub("Females", "", df_cancro$Year) #Tirar a palavra Females dos anos
+df_cancro$Year<-sub("Males", "", df_cancro$Year) #Tirar a palavra Males dos anos
+df_cancro$Year<-sub(".", "", df_cancro$Year) #Tirar o underscore dos anos
 
-TodosCancros <- na.omit(TodosCancros) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
 
-add_all<- aggregate(TodosCancros$cancer, by=list(TodosCancros$Year, TodosCancros$Country, TodosCancros$Sex, TodosCancros$CancerSite), FUN=sum)
+df_cancro <- na.omit(df_cancro) #NO ENVIRONMENT NAO APARECE AS OBSERVACOES CERTAS
+
+
+add_all<- aggregate(df_cancro$cancer, by=list(df_cancro$Year, df_cancro$Country, df_cancro$Sex, df_cancro$CancerSite, df_cancro$Cause), FUN=sum)
 #Dataframe das mortes relativas ao cancro por Ano, País e Sexo
-setnames(add_all, old = c("Group.1","Group.2","Group.3","Group.4","x"), new = c("Year", "Country", "Sex","CancerSite","cancer"))
+setnames(add_all, old = c("Group.1","Group.2","Group.3","Group.4","Group.5","x"), new = c("Year", "Country", "Sex","CancerSite","Cause", "cancer"))
 
 ageGroup<-rep("All", times = 5952)
 add_all<-cbind(add_all,ageGroup)
 
-TodosCancros<- rbind(TodosCancros, add_all)
+df_cancro<- rbind(df_cancro, add_all)
 
 
-total<-merge(POP,TodosCancros, by=c("Country", "Sex", "Year", "ageGroup"))
-mRate <- 100000*(total$cancer/total$pop)
+total2<-merge(POP,df_cancro, by=c("Country", "Sex", "Year", "ageGroup"))
+
+mRate <- 100000*(total2$cancer/total2$pop)
 mRate<-round(mRate,3)
 
-TabelaFinal2<- cbind(total,mRate)
+TabelaFinal2<- cbind(total2,mRate)
+head(TabelaFinal2)
+
+```
+
+#What are the five (5) most common cancers in 2011? in 2016 for your countries?
+
+```{r questão4}
+
 
 Paises<- TabelaFinal2[TabelaFinal2$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
 
@@ -389,6 +388,7 @@ geom_bar(position="dodge", stat="identity")+
    labs(title = "Cancros mais comuns em 2011", x= "Tipos de cancro por sexo", y= "Taxa de mortalidade", fill = "Sexo")+
     geom_text(aes(label = Paises_2011$mRate, y = Paises_2011$mRate + 0.05),
     position = position_dodge(0.9),vjust = 0, size = 2)+
+    theme(axis.text.x = element_text(angle = 90))+
     facet_grid(Paises_2011$Country)
 
 
@@ -405,8 +405,53 @@ ggplot(Paises_2016, aes(fill=Sex, y=Paises_2016$mRate, x=Paises_2016$CancerSite)
 geom_bar(position="dodge", stat="identity")+
    labs(title = "Cancros mais comuns em 2016", x= "Tipos de cancro por sexo", y= "Taxa de mortalidade", fill = "Sexo")+
     geom_text(aes(label = Paises_2016$mRate, y = Paises_2016$mRate + 0.05),
-    position = position_dodge(0.9),vjust = 0, size = 2)+
+    position = position_dodge(0.9),vjust = 0.5, size = 2)+
+    theme(axis.text.x = element_text(angle = 90))+
     facet_grid(Paises_2016$Country)
 ```
 
+#What are the five (5) most common causes of death due to cancer in 2011? in 2017 for your countries?
+
+```{r questao 5}
+
+Paises<- TabelaFinal2[TabelaFinal2$Country %in% c("Belgium", "Finland", "Italy", "Netherlands", "Portugal"),]
+
+
+#Cancros mais comuns nas mulheres
+Paises_FEM_cause<-Paises[Paises$Year %in% c(2011,2016),]
+Paises_FEM_cause<-Paises_FEM_cause[Paises_FEM_cause$ageGroup %in% "All",]
+Paises_FEM_cause<-Paises_FEM_cause[!Paises_FEM_cause$CancerSite %in% "All Cancers",]
+Paises_FEM_cause<-Paises_FEM_cause[Paises_FEM_cause$Sex %in% "Females",]
+
+
+levels(Paises_FEM_cause$Cause) <- list(MNCRJRAAC="Malignant neoplasm of colon, rectosigmoid junction, rectum, anus and anal canal", MNBCNS="Malignant neoplasm of brain and central nervous system", MNLarynx="Malignant neoplasm of larynx", MNOvary="Malignant neoplasm of ovary", MNOesophagus="Malignant neoplasm of oesophagus", MNLIBD="Malignant neoplasm of liver and intrahepatic bile ducts", MNLOCP="Malignant neoplasm of lip, oral cavity, pharynx", MNBreast="Malignant neoplasm of breast", MNBladder="Malignant neoplasm of bladder", MNKERP="Malignant neoplasm of kidney, except renal pelvis", MNPancreas="Malignant neoplasm of pancreas", MNThyroidGland="Malignant neoplasm of thyroid gland", MNOPFU="Malignant neoplasm of other parts of uterus", MNTBL="Malignant neoplasm of trachea, bronchus and lung",MNStomach= "Malignant neoplasm of stomach", MNCervixUteri="Malignant neoplasm of cervix uteri", MNProstate="Malignant neoplasm of prostate", ALL="ALL" )
+
+ggplot(Paises_FEM_cause, aes(fill=Year, y=Paises_FEM_cause$mRate, x=Paises_FEM_cause$Cause)) +
+geom_bar(position="dodge", stat="identity")+
+   labs(title = "Cancros mais comuns no sexo feminino", x= "Tipos de cancro por ano", y= "Taxa de mortalidade", fill = "Ano")+
+    geom_text(aes(label = Paises_FEM_cause$mRate, y = Paises_FEM_cause$mRate + 0.05),
+    position = position_dodge(0.9),vjust = 0, size = 2)+
+    theme(axis.text.x = element_text(angle = 90))+
+    scale_fill_manual(values=c("#84DCEE","#3A7E8B"))+
+    facet_grid(Paises_FEM_cause$Country)
+
+#Cancros mais comuns nos homens
+Paises_MALES_cause<-Paises[Paises$Year %in% c(2011,2016),]
+Paises_MALES_cause<-Paises_MALES_cause[Paises_MALES_cause$ageGroup %in% "All",]
+Paises_MALES_cause<-Paises_MALES_cause[!Paises_MALES_cause$CancerSite %in% "All Cancers",]
+Paises_MALES_cause<-Paises_MALES_cause[Paises_MALES_cause$Sex %in% "Males",]
+
+
+levels(Paises_MALES_cause$Cause) <- list(MNCRJRAAC="Malignant neoplasm of colon, rectosigmoid junction, rectum, anus and anal canal", MNBCNS="Malignant neoplasm of brain and central nervous system", MNLarynx="Malignant neoplasm of larynx", MNOvary="Malignant neoplasm of ovary", MNOesophagus="Malignant neoplasm of oesophagus", MNLIBD="Malignant neoplasm of liver and intrahepatic bile ducts", MNLOCP="Malignant neoplasm of lip, oral cavity, pharynx", MNBreast="Malignant neoplasm of breast", MNBladder="Malignant neoplasm of bladder", MNKERP="Malignant neoplasm of kidney, except renal pelvis", MNPancreas="Malignant neoplasm of pancreas", MNThyroidGland="Malignant neoplasm of thyroid gland", MNOPFU="Malignant neoplasm of other parts of uterus", MNTBL="Malignant neoplasm of trachea, bronchus and lung",MNStomach= "Malignant neoplasm of stomach", MNCervixUteri="Malignant neoplasm of cervix uteri", MNProstate="Malignant neoplasm of prostate", ALL="ALL" )
+
+ggplot(Paises_MALES_cause, aes(fill=Year, y=Paises_MALES_cause$mRate, x=Paises_MALES_cause$Cause)) +
+geom_bar(position="dodge", stat="identity")+
+   labs(title = "Cancros mais comuns no sexo masculino", x= "Tipos de cancro por ano", y= "Taxa de mortalidade", fill = "Ano")+
+    geom_text(aes(label = Paises_MALES_cause$mRate, y = Paises_MALES_cause$mRate + 0.05),
+    position = position_dodge(0.9),vjust = 0, size = 2)+
+    theme(axis.text.x = element_text(angle = 90))+
+    scale_fill_manual(values=c("#84DCEE","#3A7E8B"))+
+    facet_grid(Paises_MALES_cause$Country)
+
+```
 
